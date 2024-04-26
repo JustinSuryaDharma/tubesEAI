@@ -79,6 +79,10 @@
                       </div>
                       <div class="col-lg-4" style="text-align: right;">
                         <h3 style="color: orange;">Rp {{ '{:,.0f}'.format(i['harga']) }}/orang</h3>
+                        <hr>
+                        <a href="/flights/{{ i['kode_penerbangan'] }}">
+                            <button type="button" class="btn btn-warning">Pesan</button>
+                        </a>
                       </div>
                     </div>
                   </div>

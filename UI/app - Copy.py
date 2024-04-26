@@ -27,7 +27,7 @@ def search():
             if response.status_code == 200:
                 flight=response.json()
                 flight=flight['data']
-                return render_template('tes.html', data=flight)
+                return render_template('nyobaclick.html', data=flight,datetime=datetime)
                 # Do something with the data
             else:
                 print("Error:", response.status_code)
@@ -41,7 +41,7 @@ def search():
             if response.status_code == 200:
                 flight=response.json()
                 flight=flight['data']
-                return render_template('tes.html', data=flight)
+                return render_template('tes.html', data=flight,datetime=datetime)
                 # Do something with the data
             else:
                 print("Error:", response.status_code)
@@ -55,7 +55,7 @@ def search():
             if response.status_code == 200:
                 flight=response.json()
                 flight=flight['data']
-                return render_template('tes.html', data=flight)
+                return render_template('tes.html', data=flight, datetime=datetime)
                 # Do something with the data
             else:
                 print("Error:", response.status_code) 
@@ -69,7 +69,7 @@ def search():
             if response.status_code == 200:
                 flight=response.json()
                 flight=flight['data']
-                return render_template('tes.html', data=flight)
+                return render_template('tes.html', data=flight, datetime=datetime)
                 # Do something with the data
             else:
                 print("Error:", response.status_code)   
@@ -83,7 +83,7 @@ def search():
             if response.status_code == 200:
                 flight=response.json()
                 flight=flight['data']
-                return render_template('tes.html', data=flight)
+                return render_template('tes.html', data=flight, datetime=datetime)
                 # Do something with the data
             else:
                 print("Error:", response.status_code) 
@@ -97,7 +97,7 @@ def search():
             if response.status_code == 200:
                 flight=response.json()
                 flight=flight['data']
-                return render_template('tes.html', data=flight)
+                return render_template('tes.html', data=flight, datetime=datetime)
                 # Do something with the data
             else:
                 print("Error:", response.status_code) 
@@ -111,10 +111,26 @@ def search():
             if response.status_code == 200:
                 flight=response.json()
                 flight=flight['data']
-                return render_template('tes.html', data=flight)
+                return render_template('tes.html', data=flight, datetime=datetime)
                 # Do something with the data
             else:
-                print("Error:", response.status_code)     
+                print("Error:", response.status_code)
+
+@app.route('/flights/<kode_penerbangan>')
+def detail(kode_penerbangan):
+    url = "http://localhost:5000/flights/{}".format(kode_penerbangan)
+    headers = {
+                "Authorization": "justin",
+                "Content-Type": "application/json"
+    }
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        flight=response.json()
+        flight=flight['data']
+        return render_template('detail_pemesanan.html', data=flight, datetime=datetime)
+                # Do something with the data
+    else:
+        print("Error:", response.status_code)     
 
 
 if __name__== '__main__':
