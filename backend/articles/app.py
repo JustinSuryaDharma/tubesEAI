@@ -77,13 +77,27 @@ def update_article(id):
   
   return article_schema.jsonify(article)
 
-@app.route('/article/<id>', methods='DELETE')
+@app.route('/article/<id>', methods=['DELETE'])
 def del_article(id):
     article = Article.query.get(id)
     db.session.delete(article)
     db.session.commit()
     
     return article_schema.jsonify(article)
+  
+@app.route('/filterart', methods=['GET'])
+def filtered_articles():
+    city_name = request.args.get('city')
+
+    if city_name:
+        articles = Article.query.filter(
+            (Article.title.like(f"%{city_name}%")) |
+            (Article.content.like(f"%{city_name}%"))
+        ).all()
+    else:
+        articles = Article.query.all()
+
+    return article_schema.jsonify(articles, many=True)
 
 # server
 if __name__ == '__main__':
