@@ -3,61 +3,46 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Articles and Attractions</title>
-  <style>
-    /* Your CSS styles here */
-  </style>
+  <title>Tourism or Flight</title>
 </head>
 <body>
-  <div class="container">
-    <div class="section">
-      <h2>Attractions</h2>
-      <div id="attractions"></div>
+  <h2>Select an Option:</h2>
+  <form id="optionForm">
+    <input type="radio" id="tourismOption" name="option" value="tourism">
+    <label for="tourismOption">Tourism</label><br>
+    <input type="radio" id="flightOption" name="option" value="flight">
+    <label for="flightOption">Flight</label><br><br>
+
+    <div id="citySelection" style="display: none;">
+      <label for="cities">Choose a city:</label>
+      <select id="cities" name="city">
+        <option value="Salatiga">Salatiga</option>
+        <option value="Kaunas">Kaunas</option>
+        <option value="Bangkok">Bangkok</option>
+        <!-- Add more cities as needed -->
+      </select><br><br>
     </div>
-    <div class="section">
-      <h2>Articles</h2>
-      <div id="articles"></div>
-    </div>
-  </div>
+    
+    <button type="submit">Submit</button>
+  </form>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      fetch('http://localhost:3000/attractions')
-        .then(response => response.json())
-        .then(attractions => {
-          const attractionsContainer = document.getElementById('attractions');
-          attractionsContainer.innerHTML = '<h3>Attractions</h3>';
-          attractions.forEach(attraction => {
-            const attractionElement = document.createElement('div');
-            attractionElement.innerHTML = `
-              <h3>${attraction.name}</h3>
-              <p>${attraction.description}</p>
-              <p>Location: ${attraction.location}</p>
-              <p>Rating: ${attraction.rating}</p>
-              <img src="${attraction.imageUrl}" alt="${attraction.name}" style="max-width: 100%;">
-            `;
-            attractionsContainer.appendChild(attractionElement);
-          });
-        })
-        .catch(error => console.error('Error fetching attractions:', error));
+    document.getElementById('optionForm').addEventListener('change', function(event) {
+      const selectedOption = event.target.value;
+      if (selectedOption === 'tourism') {
+        document.getElementById('citySelection').style.display = 'block';
+      } else {
+        document.getElementById('citySelection').style.display = 'none';
+      }
+    });
 
-      fetch('http://localhost:5000/article')
-        .then(response => response.json())
-        .then(articles => {
-          const articlesContainer = document.getElementById('articles');
-          articlesContainer.innerHTML = '<h3>Articles</h3>';
-          articles.forEach(article => {
-            const articleElement = document.createElement('div');
-            articleElement.innerHTML = `
-              <h3>${article.title}</h3>
-              <p>${article.content}</p>
-              <p>Author: ${article.author}</p>
-              <p>Date: ${new Date(article.date_created).toLocaleDateString()}</p>
-            `;
-            articlesContainer.appendChild(articleElement);
-          });
-        })
-        .catch(error => console.error('Error fetching articles:', error));
+    document.getElementById('optionForm').addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission behavior
+      const selectedOption = document.querySelector('input[name="option"]:checked').value;
+      const selectedCity = document.getElementById('cities').value;
+      console.log('Selected option:', selectedOption);
+      console.log('Selected city:', selectedCity);
+      // Perform further actions based on selected option and city
     });
   </script>
 </body>
