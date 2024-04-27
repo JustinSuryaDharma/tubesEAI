@@ -1,38 +1,58 @@
 const express = require('express');
 const app = express();
 const PORT = 5000;
+var admin = require("firebase-admin");
+const serviceAccount = require("./key.json");
 
-app.listen(
-  PORT,
-  () => console.log(`It's alive on http://localhost:${PORT}`)
-)
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://fir-login-24502-default-rtdb.firebaseio.com",
+});
+
+const db = admin.database();
 
 app.use(express.json())
 
 app.get('/attractions', (req, res) => {
-  res.status(200).send({
-    "id": 1,
-    "name": "Benteng Takeshi",
-    "description": "Benteng Takeshi merupakan salah satu landmark sejarah yang mempesona di kota Salatiga. Bangunan ini menyimpan kekayaan sejarah dan memperkaya keindahan kota ini dengan keberadaannya. Dibangun pada era kolonial Jepang, Benteng Takeshi menjadi saksi bisu perjalanan waktu dan kejadian bersejarah. Melalui penjelajahan yang mendalam di dalamnya, pengunjung dapat merasakan aura sejarah yang kuat dan mendapatkan pemahaman yang lebih dalam tentang masa lalu kota ini.",
-    "type": "Landmark Sejarah",
-    "location": "Salatiga, Indonesia",
-    "rating": 4.7,
-    "imageUrl": "https://cdns.klimg.com/merdeka.com/i/w/news/2022/03/31/1422273/content_images/670x335/20220331155329-1-tayangan-penuh-kenangan-ini-fakta-program-benteng-takeshi-yang-akan-comeback-di-2023-001-denny-marhendri.jpg"
-  })
+  db.ref('/attractions').once('value', snapshot => {
+    const attractions = [];
+    snapshot.forEach(childSnapshot => {
+      const attractionId = childSnapshot.key;
+      const attractionData = childSnapshot.val();
+      attractions.push({ id: attractionId, ...attractionData });
+    });
+    res.status(200).json(attractions);
+  });
 });
 
 app.post('/attractions/:id', (req, res) => {
   const { id } = req.params;
   const { name, description, type, location, rating, imageUrl } = req.body;
 
-  console.log("Received data:");
-  console.log("ID:", id);
-  console.log("Name:", name);
-  console.log("Description:", description);
-  console.log("Type:", type);
-  console.log("Location:", location);
-  console.log("Rating:", rating);
-  console.log("Image URL:", imageUrl);
+  const attractionRef = db.ref(`/attractions/${id}`);
 
-  res.status(200).json({ message: "Attraction updated successfully" });
-})
+  attractionRef.update({
+    name: name,
+    description: description,
+    type: type,
+    location: location,
+    rating: rating,
+    imageUrl: imageUrl
+  }, (error) => {
+    if (error) {
+      console.error("Error updating attraction:", error);
+      res.status(500).json({ error: "Error updating attraction" });
+    } else {
+      console.log("Attraction updated successfully");
+      res.status(200).json({ message: "Attraction updated successfully" });
+    }
+  });
+});
+
+
+
+
+app.listen(
+  PORT,
+  () => console.log(`It's alive on http://localhost:${PORT}`)
+)
