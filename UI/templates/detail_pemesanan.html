@@ -77,30 +77,9 @@
                     <h3 id="totalHarga{{ loop.index }}">Total Harga: Rp {{ '{:,.0f}'.format(i['harga']) }}</h3>
                     <input type="hidden" id="hiddenTotalHarga{{ loop.index }}" name="hiddenTotalHarga" value="{{ i['harga'] }}">
                     <hr>
-<<<<<<< HEAD
-                    <form method="POST" action="/checkout">
-                         Add any additional hidden fields or input fields here -->
-                        <!-- <button type="submit" class="btn btn-warning">Checkout</button> -->
-                    <!-- </form> --> 
-                    <form method="POST" action="/checkout">
-                        <!-- Input field for jumlahTiket -->
-                        <input type="number" id="jumlahTiket{{ loop.index }}" name="jumlahTiket" value="1" min="1" max="{{ i['jumlah_tiket'] }}" data-harga="{{ i['harga'] }}" onchange="calculateTotal(this)">
-                        <hr>
-                        <!-- Hidden input field for hiddenTotalHarga -->
-                        <h3 id="totalHarga{{ loop.index }}">Total Harga: Rp {{ '{:,.0f}'.format(i['harga']) }}</h3>
-                        <hr>
-                        <input type="hidden" id="hiddenTotalHarga{{ loop.index }}" name="hiddenTotalHarga" value="{{ i['harga'] }}">
-                        <input type="hidden" id="hiddenKodePenerbangan" name="hiddenKodePenerbangan" value="{{ i['kode_penerbangan'] }}">
-                        <hr>
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-warning">Checkout</button>
-                    </form>
-                    
-=======
                     <a href="#" onclick="bookTicket('{{ i['kode_penerbangan'] }}', '{{ loop.index }}')">
                         <button type="button" class="btn btn-warning">Checkout</button>
                     </a>
->>>>>>> 363aba5233e0a5cdee3fc6e8dfd962d9151a7206
                     
                 </div>
             </div>
