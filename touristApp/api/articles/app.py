@@ -87,7 +87,7 @@ def del_article(id):
   
 @app.route('/filterart', methods=['GET'])
 def filtered_articles():
-    city_name = request.args.get('city')
+    city_name = request.args.get('location')
 
     if city_name:
         articles = Article.query.filter(
