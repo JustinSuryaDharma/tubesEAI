@@ -17,6 +17,8 @@ def search():
         departure = str(request.form['departure'])
         destination = str(request.form['destination'])
         date = str(request.form['date'])
+
+
         if departure and destination and date:
             url = "http://localhost:5000/flights/from/{}/to/{}/on/{}".format(departure, destination, date)
             headers = {
@@ -31,6 +33,9 @@ def search():
                 # Do something with the data
             else:
                 print("Error:", response.status_code)
+
+
+
         elif departure and destination and not date:
             url = "http://localhost:5000/flights/from/{}/to/{}".format(departure, destination)
             headers = {
@@ -45,6 +50,9 @@ def search():
                 # Do something with the data
             else:
                 print("Error:", response.status_code)
+
+
+
         elif departure and not destination and date:
             url = "http://localhost:5000/flights/from/{}/on/{}".format(departure, date)
             headers = {
@@ -131,6 +139,27 @@ def detail(kode_penerbangan):
                 # Do something with the data
     else:
         print("Error:", response.status_code)     
+
+
+
+@app.route('/booking', methods='POST')
+def book():
+    total_harga = int(request.form['total_harga'])
+    kode_penerbangan = str(request.form['kode_penerbangan'])
+    jumlah_tiket = int(request.form['jumlah_tiket'])
+
+    if total_harga and kode_penerbangan and jumlah_tiket:
+        url = "http://localhost:5000/bookings/{}/{}/{}". format(total_harga, kode_penerbangan, jumlah_tiket)
+        headers = {
+                "Authorization": "justin",
+                "Content-Type": "application/json"
+            }
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            return render_template('template.html')
+                # Do something with the data
+        else:
+                print("Error:", response.status_code)
 
 
 if __name__== '__main__':
