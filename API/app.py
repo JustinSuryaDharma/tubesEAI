@@ -29,12 +29,7 @@ mysql = MySQL(app)
 #         return jsonify({"status_code": "401","status": "error", "message": "Unauthorized", "timestamp": datetime.now()}), 401
 
 
-@app.route('/') ## LANDING PAGE
-def method_name():
-    return jsonify("Search for Your Flights Here!")
 
-
-# first endpoint
 ### DAFTAR PENERBANGAN -- GET method --
 @app.route('/flights', methods=['GET'])
 def get_all_flights():
@@ -81,6 +76,9 @@ def get_all_flights():
         "timestamp": datetime.now(),
         "data": formatted_data
     }), 200
+
+
+
 
 
 #API DEPT DEST DATE
@@ -132,6 +130,9 @@ def get_flights_dept_dest_date(departure, destination, date):
 #END OF API DEPT DEST DATE
 
 
+
+
+
 #API DEPT DEST
 @app.route('/flights/from/<departure>/to/<destination>', methods=['GET'])
 def get_flights_dept_dest(departure, destination):
@@ -179,6 +180,10 @@ def get_flights_dept_dest(departure, destination):
         "data": formatted_data
     }), 200
 #END OF API DEPT DEST
+
+
+
+
 
 #API DEPT DATE
 @app.route('/flights/from/<departure>/on/<date>', methods=['GET'])
@@ -277,6 +282,10 @@ def get_flights_dept(departure):
     }), 200
 #END OF API DEPT
 
+
+
+
+
 #API DEST DATE
 @app.route('/flights/to/<destination>/on/<date>', methods=['GET'])
 def get_flights_dest_date(destination, date):
@@ -324,6 +333,10 @@ def get_flights_dest_date(destination, date):
         "data": formatted_data
     }), 200
 #END OF API DEST DATE
+
+
+
+
 
 #API DEST
 @app.route('/flights/to/<destination>', methods=['GET'])
@@ -373,6 +386,10 @@ def get_flights_dest(destination):
     }), 200
 #END OF API DEST
 
+
+
+
+
 #API DATE
 @app.route('/flights/on/<date>', methods=['GET'])
 def get_flights_date(date):
@@ -420,6 +437,65 @@ def get_flights_date(date):
         "data": formatted_data
     }), 200
 #END OF API DATE
+
+
+
+
+
+
+@app.route('/tickets/<kode_penerbangan>', methods=['GET'])
+def get_ticket_detail(kode_penerbangan):
+    
+    def get_ticket_detail_from_database(kode_penerbangan):
+        cursor = mysql.connection.cursor()
+        cursor.execute('''
+            SELECT * FROM Tiket_Penerbangan WHERE kode_penerbangan = %s
+        ''', (kode_penerbangan,))
+        ticket_detail = cursor.fetchone()
+        cursor.close()
+        return ticket_detail
+    
+    ticket_detail = get_ticket_detail_from_database(kode_penerbangan)
+    if ticket_detail:
+        return jsonify({
+            "status_code": 200,
+            "status": "success",
+            "message": "Ticket detail retrieved successfully",
+            "timestamp": datetime.now(),
+            "data": ticket_detail
+        }), 200
+    else:
+        return jsonify({
+            "status_code": 404,
+            "status": "Not Found",
+            "message": "Ticket not found",
+            "timestamp": datetime.now(),
+            "data": {}
+        }), 404
+
+
+
+
+
+
+
+@app.route('/bookings/<total_harga>/<kode_penerbangan>/<jumlah_tiket>', methods=['POST'])
+def book_ticket(total_harga, kode_penerbangan, jumlah_tiket):
+    cursor = mysql.connection.cursor()
+
+    cursor.execute('''
+                INSERT INTO Pemesanan (total_harga, kode_penerbangan, jumlah_tiket) 
+                VALUES (%s, %s, %s)
+            ''', (total_harga, kode_penerbangan, jumlah_tiket ))
+
+
+    return jsonify({
+        "status_code": 200,
+        "status": "success",
+        "message": "Ticket booked successfully",
+        "timestamp": datetime.now()
+    }), 200
+
 
 
 # second endpoint
