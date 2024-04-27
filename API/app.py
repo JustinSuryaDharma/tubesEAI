@@ -479,46 +479,22 @@ def get_ticket_detail(kode_penerbangan):
 
 
 
-@app.route('/bookings', methods=['POST'])
-def book_ticket():
-    ticket_data = request.json
+@app.route('/bookings/<total_harga>/<kode_penerbangan>/<jumlah_tiket>', methods=['POST'])
+def book_ticket(total_harga, kode_penerbangan, jumlah_tiket):
+    cursor = mysql.connection.cursor()
 
-    if not ticket_data or 'kode_penerbangan' not in ticket_data or 'jumlah_tiket' not in ticket_data:
-        return jsonify({
-            "status_code": 400,
-            "status": "Bad Request",
-            "message": "Invalid ticket data",
-            "timestamp": datetime.now(),
-            "data": {}
-        }), 400
-
-    total_price = ticket_data.get('total_price')
-
-    try:
-        with mysql.connection.cursor() as cursor:
-            cursor.execute('''
-                INSERT INTO tabel_pemesanan (kode_penerbangan, jumlah_tiket, total_harga) 
+    cursor.execute('''
+                INSERT INTO Pemesanan (total_harga, kode_penerbangan, jumlah_tiket) 
                 VALUES (%s, %s, %s)
-            ''', (ticket_data['kode_penerbangan'], ticket_data['jumlah_tiket'], total_price))
-            mysql.connection.commit()
-        return jsonify({
-            "status_code": 200,
-            "status": "success",
-            "message": "Ticket booked successfully",
-            "timestamp": datetime.now(),
-            "data": ticket_data
-        }), 200
-    except Exception as e:
-        mysql.connection.rollback()
-        print("Error booking ticket:", e)
-        return jsonify({
-            "status_code": 500,
-            "status": "Internal Server Error",
-            "message": "Failed to book ticket",
-            "timestamp": datetime.now(),
-            "data": {}
-        }), 500
+            ''', (total_harga, kode_penerbangan, jumlah_tiket ))
 
+
+    return jsonify({
+        "status_code": 200,
+        "status": "success",
+        "message": "Ticket booked successfully",
+        "timestamp": datetime.now()
+    }), 200
 
 
 
