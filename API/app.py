@@ -442,51 +442,22 @@ def get_flights_date(date):
 
 
 
-
-@app.route('/tickets/<kode_penerbangan>', methods=['GET'])
-def get_ticket_detail(kode_penerbangan):
-    
-    def get_ticket_detail_from_database(kode_penerbangan):
-        cursor = mysql.connection.cursor()
-        cursor.execute('''
-            SELECT * FROM Tiket_Penerbangan WHERE kode_penerbangan = %s
-        ''', (kode_penerbangan,))
-        ticket_detail = cursor.fetchone()
-        cursor.close()
-        return ticket_detail
-    
-    ticket_detail = get_ticket_detail_from_database(kode_penerbangan)
-    if ticket_detail:
-        return jsonify({
-            "status_code": 200,
-            "status": "success",
-            "message": "Ticket detail retrieved successfully",
-            "timestamp": datetime.now(),
-            "data": ticket_detail
-        }), 200
-    else:
-        return jsonify({
-            "status_code": 404,
-            "status": "Not Found",
-            "message": "Ticket not found",
-            "timestamp": datetime.now(),
-            "data": {}
-        }), 404
-
-
-
-
-
-
-
 @app.route('/bookings/<total_harga>/<kode_penerbangan>/<jumlah_tiket>', methods=['POST'])
 def book_ticket(total_harga, kode_penerbangan, jumlah_tiket):
     cursor = mysql.connection.cursor()
 
+        # Insert booking into Pemesanan table
     cursor.execute('''
-                INSERT INTO Pemesanan (total_harga, kode_penerbangan, jumlah_tiket) 
-                VALUES (%s, %s, %s)
-            ''', (total_harga, kode_penerbangan, jumlah_tiket ))
+        INSERT INTO Pemesanan (total_harga, kode_penerbangan, jumlah_tiket) 
+        VALUES (%s, %s, %s)
+    ''', (int(total_harga), kode_penerbangan, int(jumlah_tiket) ))
+
+        # Update Tiket_Penerbangan table
+    cursor.execute('''
+        UPDATE Tiket_Penerbangan 
+        SET jumlah_tiket = jumlah_tiket - %s 
+        WHERE kode_penerbangan = %s
+    ''', (int(jumlah_tiket), kode_penerbangan))
 
 
     return jsonify({

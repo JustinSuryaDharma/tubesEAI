@@ -142,14 +142,14 @@ def detail(kode_penerbangan):
 
 
 
-@app.route('/booking', methods='POST')
+@app.route('/booking', methods=['POST'])
 def book():
-    total_harga = int(request.form['total_harga'])
+    total_harga = str(request.form['total_harga'])
     kode_penerbangan = str(request.form['kode_penerbangan'])
-    jumlah_tiket = int(request.form['jumlah_tiket'])
+    jumlah_tiket = str(request.form['jumlah_tiket'])
 
     if total_harga and kode_penerbangan and jumlah_tiket:
-        url = "http://localhost:5000/bookings/{}/{}/{}". format(total_harga, kode_penerbangan, jumlah_tiket)
+        url = "http://localhost:5000/bookings/{}/{}/{}".format(total_harga, kode_penerbangan, jumlah_tiket)
         headers = {
                 "Authorization": "justin",
                 "Content-Type": "application/json"
@@ -157,9 +157,9 @@ def book():
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             return render_template('template.html')
-                # Do something with the data
         else:
-                print("Error:", response.status_code)
+            print("Error:", response.status_code)
+
 
 
 if __name__== '__main__':
