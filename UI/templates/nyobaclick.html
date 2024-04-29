@@ -37,60 +37,66 @@
         </section>
         
         <div class="container">
+            <br><br>
             <h1 class="mt-1 mb-1">Daftar Penerbangan</h1>
-            {% for i in data %}
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="card mb-3">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col-lg-4">
-                        <h2 class="ms-5">{{ i['nama_maskapai'] }}</h2>
-                        <p>{{ i['kode_penerbangan'] }}</p>
-                        <div class="rounded-pill border p-1 ms-5" style="width: fit-content;">
-                          <div class="row align-items-center">
-                            <div class="col-lg-5 ms-2">
-                              <i class="bi bi-suitcase-lg"></i>
+            <br><br>
+            <div id="slide" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    {% for i in range(0, data|length, 3) %}
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <div class="row">
+                            {% for j in range(i, i+3) %}
+                            {% if j < data|length %}
+                            <div class="col-lg-4">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h2 class="ms-3">{{ data[j]['nama_maskapai'] }}</h2>
+                                        <p class="ms-3">{{ data[j]['kode_penerbangan'] }}</p>
+                                        <div class="rounded-pill border p-1 ms-3" style="width: fit-content;">
+                                            <div class="row align-items-center">
+                                                <div class="col-lg-5 ms-2">
+                                                    <i class="bi bi-suitcase-lg"></i>
+                                                </div>
+                                                <div class="col-lg-6 mt-1">
+                                                    <h6 class="d-flex align-items-center">{{ data[j]['max_luggage'] }}kg</h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <h6>{{ data[j]['dept_time'] }}</h6>
+                                            <i class="bi bi-arrow-down-short"></i>
+                                            <h6>{{ data[j]['arriv_time'] }}</h6>
+                                            <p>{{ data[j]['duration'] }}</p>
+                                            <h3 style="color: orange;">Rp {{ '{:,.0f}'.format(data[j]['harga']) }}/orang</h3>
+                                            <hr>
+                                            <a href="/flights/{{ data[j]['kode_penerbangan'] }}">
+                                                <button type="button" class="btn btn-warning">Pesan</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-lg-6 mt-1">
-                              <h6 class="d-flex align-items-center">{{ i['max_luggage'] }}kg</h6>
-                            </div>
-                          </div>
+                            {% endif %}
+                            {% endfor %}
                         </div>
-                      </div>
-                      <div class="col-lg-4" style="text-align: center;">
-                        {% set time_depart = i['dept_time'].split(' ')[4] %}
-                        {% set formatted_time_depart = time_depart[:-3] %}
-                        <h3>{{ formatted_time_depart }}</h3>
-                        <i class="bi bi-arrow-right"></i>
-                        {% set time_arr = i['arriv_time'].split(' ')[4] %}
-                        {% set formatted_time_arr = time_arr[:-3] %}
-                        <h3>{{ formatted_time_arr }}</h3>
-                        
-                        {% set departure_time = datetime.strptime(i['dept_time'], '%a, %d %b %Y %H:%M:%S %Z') %}
-                        {% set arrival_time = datetime.strptime(i['arriv_time'], '%a, %d %b %Y %H:%M:%S %Z') %}
-                        {% set duration = arrival_time - departure_time %}
-                        {% set duration_hours = duration.seconds // 3600 %}
-                        {% set duration_minutes = (duration.seconds // 60) % 60 %}
-              
-                        <p class="mt-0" style="vertical-align: 2px;">
-                            {{ duration_hours }}jam {{ duration_minutes }}menit
-                        </p>
-                      </div>
-                      <div class="col-lg-4" style="text-align: right;">
-                        <h3 style="color: orange;">Rp {{ '{:,.0f}'.format(i['harga']) }}/orang</h3>
-                        <hr>
-                        <a href="/flights/{{ i['kode_penerbangan'] }}">
-                            <button type="button" class="btn btn-warning">Pesan</button>
-                        </a>
-                      </div>
                     </div>
-                  </div>
+                    {% endfor %}
                 </div>
-              </div>
+
+                <a class="carousel-control-prev" href="#slide" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true" style="color: red !important;"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#slide" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true" style="color: red !important;"></span>
+                    <span class="sr-only">Next</span>
+A                </a>
             </div>
-            {% endfor %}
-          </div>
+        </div>
+        
+
+        
+
         
 
 
