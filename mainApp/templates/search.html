@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Article</title>
+  </head>
+  <body>
+    <section class="tm-section py-16">
+      <div class="container mx-auto">
+        <div class="text-center">
+          <h2 class="text-3xl text-gray-800 font-bold mb-4">Our Articles</h2>
+          <p class="text-lg text-gray-600">
+            Welcome to our article, feel free to read it.
+          </p>
+        </div>
+        <br />
+        <div class="text-center mx-auto">
+          <!-- Dropdown menu -->
+          <form id="locationForm" class="form-wrap" action="/tourism" method="get">
+              <input id="locationInput" type="text" class="form-control" name="location" placeholder="To" onfocus="this.placeholder = ''" onblur="this.placeholder = 'To'">
+              <div class="d-flex justify-content-center">
+                  <input type="submit" name="submit" value="Search" class="primary-btn text-uppercase">
+              </div>
+          </form>
+        </div>
+
+    <script src="{{ url_for('static', filename='js/vendor/jquery-2.2.4.min.js') }}"></script>
+    <script>
+      // Get the dropdown button and dropdown menu
+      const dropdownButton = document.getElementById("dropdownDefaultButton");
+      const dropdownMenu = document.getElementById("dropdown");
+
+      // Add event listener to toggle dropdown menu visibility
+      dropdownButton.addEventListener("click", () => {
+        dropdownMenu.classList.toggle("hidden");
+      });
+
+      // Add event listener to city options
+      const cityOptions = document.querySelectorAll(".city-option");
+      cityOptions.forEach((option) => {
+        option.addEventListener("click", function (event) {
+          event.preventDefault();
+          const selectedCity = this.dataset.city;
+          fetch(`/tourism?location=${selectedCity}`)
+            .then((response) => response.json())
+            .then((data) => {
+              // Call function to update UI with new data
+              updateUI(data);
+            })
+            .catch((error) => console.error("Error fetching data:", error));
+        });
+      });
+
+      // Function to update UI with new data
+      function updateUI(data) {
+        const articleContainer = document.getElementById("articleContainer");
+        articleContainer.innerHTML = ""; // Clear existing articles
+
+        data.articles.forEach((article) => {
+          const articleCard = `
+                <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
+                    <a href="#">
+                        <img class="rounded-t-lg mb-4 w-full" src="${article.imageUrl}" alt="Image" />
+                    </a>
+                    <div class="p-5">
+                        <a href="#">
+                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">${article.title}</h5>
+                        </a>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">${article.content}</p>
+                        <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Read more
+                            <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            `;
+          articleContainer.innerHTML += articleCard;
+        });
+      }
+    </script>
+    <script>
+      function updateLocation() {
+          var input = document.querySelector('input[name="location"]');
+          var location = input.value.trim();
+          input.value = location;  // Ensure the value is trimmed and assigned back to the input field
+  
+          // If the location is not empty, update the action URL of the form
+          if (location !== "") {
+              var form = document.querySelector('.form-wrap');
+              form.action = "/tourism?location=" + encodeURIComponent(location);
+          }
+      }
+  </script>
+  <script>
+    function updateLocation() {
+        var locationValue = document.getElementById("locationInput").value;
+        var formAction = "/tourism?location=" + encodeURIComponent(locationValue);
+        document.getElementById("locationForm").action = formAction;
+    }
+</script>
+  </body>
+</html>
