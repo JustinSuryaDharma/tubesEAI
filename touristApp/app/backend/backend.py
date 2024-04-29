@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import requests
 
 app = Flask(__name__)
@@ -73,6 +73,10 @@ def get_city():
   city_information = city_info(city)
   return jsonify(city_information)
 
+@app.route('/all_cities')
+def get_all():
+    return render_template('index.html', city=get_city, attraction=get_attraction)
+
 @app.route('/gpt4', methods=['POST'])
 def gpt4_interaction():
     data = request.get_json()
@@ -83,6 +87,9 @@ def gpt4_interaction():
 
     response = input_user(user_input)
     return jsonify({'response': response})
+
+
+
 
 if __name__ =="__main__":
   app.run(debug=True, port=5009)
