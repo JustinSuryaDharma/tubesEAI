@@ -60,10 +60,17 @@
     <title>{{ siti }}</title>
   </head>
   <body>
-    <div class="tm-home-img-container hidden lg:block w-full h-80  overflow-hidden ">
-      <img src="https://i.pinimg.com/originals/1c/0b/4a/1c0b4aba1dc77f3a5d840e6c17e13e72.jpg" alt="Image" class="object-cover w-full h-full" style="object-position: center;" />
+    <div
+      class="tm-home-img-container hidden lg:block w-full h-80 overflow-hidden"
+    >
+      <img
+        src="https://i.pinimg.com/originals/1c/0b/4a/1c0b4aba1dc77f3a5d840e6c17e13e72.jpg"
+        alt="Image"
+        class="object-cover w-full h-full"
+        style="object-position: center"
+      />
     </div>
-    
+
     <section class="tm-section py-16">
       <div class="container mx-auto">
         <div class="text-center">
@@ -77,6 +84,7 @@
           <hr />
         </div>
 
+        <br><br>
         <h1
           class="text-3xl text-gray-800 font-bold mb-4"
           style="text-align: center"
@@ -86,11 +94,13 @@
 
         <div class="flex flex-row flex-wrap justify-center space-x-6 mt-8">
           {% for attractionp in data_city.attraction %}
-            
+
           <div
             class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
           >
-            <img class="rounded-t-lg mb-4 w-full" src="https://cdns.klimg.com/merdeka.com/i/w/news/2022/03/31/1422273/content_images/670x335/20220331155329-1-tayangan-penuh-kenangan-ini-fakta-program-benteng-takeshi-yang-akan-comeback-di-2023-001-denny-marhendri.jpg" alt="img" width="500px" />
+            <img class="rounded-t-lg mb-4 w-full"
+            src="{{ attractionp.imageUrl }}" alt="img"
+            width="500px" />
             <div class="p-5">
               <a href="#">
                 <h5
@@ -102,13 +112,13 @@
               <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">
                 {{ attractionp.description }}
               </p>
-            
             </div>
           </div>
           {% endfor %}
         </div>
 
-        <br />
+
+        <br><hr><br><br>
         <h1
           class="text-3xl text-gray-800 font-bold mb-4"
           style="text-align: center"
@@ -162,6 +172,7 @@
       </div>
     </section>
 
+    <br><hr><br><br>
     <!-- INI CAROUSEL -->
     <div class="container">
       <h1
@@ -179,7 +190,7 @@
               <div class="col-lg-4">
                 <div class="card mb-3">
                   <div class="card-body">
-                    <h2 class="ms-3">{{ data[j]['nama_maskapai'] }}</h2>
+                    <h2 class="ms-3 text-2xl font-bold">{{ data[j]['nama_maskapai'] }}</h2>
                     <p class="ms-3">{{ data[j]['kode_penerbangan'] }}</p>
                     <div
                       class="rounded-pill border p-1 ms-3"
