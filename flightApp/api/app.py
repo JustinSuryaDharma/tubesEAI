@@ -17,9 +17,7 @@ mysql = MySQL(app)
 
 
 
-@app.route('/') ## LANDING PAGE
-def method_name():
-    return jsonify("Search for Your Flights Here!")
+
 
 
 # first endpoint
@@ -491,13 +489,38 @@ def book_ticket(total_harga, kode_penerbangan, jumlah_tiket):
     }), 201
 
 
+# third endpoint
+### EDIT PENERBANGAN -- PUT method --
+@app.route('/updateBandara/<IATA>/<nama_bandara>/<nama_kota>/nama_negara>', methods=['PUT'])
+def update_flight(kode_penerbangan):
+    cursor = mysql.connection.cursor()
+    query = ('''UPDATE Bandara
+            SET nama_bandara = %s, nama_kota = %s, nama_negara = %s
+            WHERE IATA = %s
+            ''', (nama_bandara, nama_kota, nama_negara, IATA))
+    cursor.execute(query)
+    mysql.connection.commit()
+    cursor.close()
+    return jsonify({
+        "status_code": 201,
+        "status": "add success",
+        "message": "Bandara updated successfully",
+        "timestamp": datetime.now()
+    }), 201
 
 
 
-
-
+# fourth endpoint
+### HAPUS PENERBANGAN -- DELETE method --
+@app.route('/deleteBandara/<IATA>', methods=['DELETE'])
+def delete_flight(IATA):
+    cursor = mysql.connection.cursor()
+    cursor.execute('DELETE FROM Bandara WHERE IATA = %s', (IATA,))
+    mysql.connection.commit()
+    cursor.close()
+    return jsonify({"status_code": "200","status": "success", "message": "Bandara deleted successfully", "timestamp": datetime.now()}), 200
 
 
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0', port=5000)
+    app.run(debug=True,host='0.0.0.0', port=5001)
