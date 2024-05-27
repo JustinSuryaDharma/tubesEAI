@@ -2,7 +2,9 @@ import uuid
 import hashlib
 from flask import Flask, request, jsonify
 from flask_mysqldb import MySQL
+from flask_mail import Mail, Message
 from datetime import datetime
+import logging
 
 app = Flask(__name__)
 
@@ -16,8 +18,18 @@ app.config['MYSQL_PORT'] = 15532
 mysql = MySQL(app)
 
 
+# Email configuration for Gmail
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'testingeaixyla@gmail.com'
+app.config['MAIL_PASSWORD'] = 'yffp kahc xzqo hluf'
+app.config['MAIL_DEFAULT_SENDER'] = ('Liburan Rek', 'testingeaixyla@gmail.com')
 
+mail = Mail(app)
 
+logging.basicConfig(level=logging.INFO)
 
 
 # first endpoint
@@ -454,45 +466,74 @@ def get_detail_penerbangan(kode_penerbangan):
 
 
 
-# third endpoint
-### TAMBAH PENERBANGAN -- POST method --
-@app.route('/bookings/<total_harga>/<kode_penerbangan>/<jumlah_tiket>', methods=['POST'])
-def book_ticket(total_harga, kode_penerbangan, jumlah_tiket, NIK, email):
+@app.route('/bookings/<total_harga>/<kode_penerbangan>/<jumlah_tiket>/<nik>/<email>', methods=['POST'])
+def book_ticket(total_harga, kode_penerbangan, jumlah_tiket, nik, email):
+    try:
+        cursor = mysql.connection.cursor()
 
-    cursor = mysql.connection.cursor()
+        # Generate a unique identifier for kode_pemesanan
+        unique_id = str(uuid.uuid4())  # Generate a UUID
+        hash_object = hashlib.sha1(unique_id.encode())  # Create a SHA-1 hash object
+        kode_pemesanan = hash_object.hexdigest()[:5]  # Extract the first 5 characters of the hash
 
-    # Generate a unique identifier for kode_pemesanan
-    unique_id = str(uuid.uuid4())  # Generate a UUID
-    hash_object = hashlib.sha1(unique_id.encode())  # Create a SHA-1 hash object
-    kode_pemesanan = hash_object.hexdigest()[:5]  # Extract the first 5 characters of the hash
+        query = '''INSERT INTO Pemesanan (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga, nik, email)
+                   VALUES (%s, %s, %s, %s, %s, %s)
+                '''
+        values = (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga, nik, email)
+        cursor.execute(query, values)
 
-    query = '''INSERT INTO Pemesanan (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga, NIK, email)
-               VALUES (%s, %s, %s, %s, %s, %s)
-            '''
-    values = (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga, NIK, email)
-    cursor.execute(query, values)
+        cursor.execute('''
+        UPDATE Tiket_Penerbangan
+        SET jumlah_tiket = jumlah_tiket - %s
+        WHERE kode_penerbangan = %s
+    ''', (jumlah_tiket, kode_penerbangan))
 
-    cursor.execute('''
-    UPDATE Tiket_Penerbangan
-    SET jumlah_tiket = jumlah_tiket - %s
-    WHERE kode_penerbangan = %s
-''', (jumlah_tiket, kode_penerbangan))
+        mysql.connection.commit()
+        cursor.close()
 
-    mysql.connection.commit()
-    cursor.close()
-    return jsonify({
-        "status_code": 201,
-        "status": "add success",
-        "message": "Flight booked successfully",
-        "kode_pemesanan": kode_pemesanan,
-        "timestamp": datetime.now()
-    }), 201
+        # Send confirmation email
+        msg = Message('Booking Confirmation',
+                      recipients=[email])
+        msg.body = f'''Dear Customer,
+
+    Your booking has been confirmed.
+
+    Booking Details:
+    Kode Pemesanan: {kode_pemesanan}
+    Kode Penerbangan: {kode_penerbangan}
+    Jumlah Tiket: {jumlah_tiket}
+    Total Harga: {total_harga}
+    NIK: {nik}
+
+    Thank you for booking with us. YUK LIBURAN REK!
+
+    Best regards,
+    Liburan Rek
+    '''
+        mail.send(msg)
+        logging.info(f"Email sent to {email}")
+
+        return jsonify({
+            "status_code": 201,
+            "status": "add success",
+            "message": "Flight booked successfully",
+            "kode_pemesanan": kode_pemesanan,
+            "timestamp": datetime.now()
+        }), 201
+
+    except Exception as e:
+        logging.error(f"Error occurred: {e}")
+        return jsonify({
+            "status_code": 500,
+            "status": "error",
+            "message": str(e)
+        }), 500
 
 
 # third endpoint
 ### EDIT PENERBANGAN -- PUT method --
 @app.route('/updateBandara/<IATA>/<nama_bandara>/<nama_kota>/nama_negara>', methods=['PUT'])
-def update_flight(kode_penerbangan):
+def update_flight(kode_penerbangan, nama_bandara, nama_kota, nama_negara, IATA):
     cursor = mysql.connection.cursor()
     query = ('''UPDATE Bandara
             SET nama_bandara = %s, nama_kota = %s, nama_negara = %s
@@ -523,4 +564,4 @@ def delete_flight(IATA):
 
 
 if __name__ == '__main__':
-    app.run(debug=True,host='0.0.0.0', port=5001)
+    app.run(debug=True,host='0.0.0.0', port=5000)
