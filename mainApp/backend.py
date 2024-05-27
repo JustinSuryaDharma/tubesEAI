@@ -197,8 +197,10 @@ def book():
     total_harga = request.form.get('hiddenTotalHarga')
     kode_penerbangan = request.form.get('hiddenKodePenerbangan')
     jumlah_tiket = request.form.get('jumlahTiket')
+    NIK = request.form.get('NIK')
+    email = request.form.get('email')
 
-    if not (total_harga and kode_penerbangan and jumlah_tiket):
+    if not (total_harga and kode_penerbangan and jumlah_tiket and NIK and email):
         return "Invalid form data", 400
 
     url = "http://localhost:5000/bookings/{}/{}/{}".format(total_harga,kode_penerbangan,jumlah_tiket)

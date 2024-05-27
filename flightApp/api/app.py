@@ -459,7 +459,7 @@ def get_detail_penerbangan(kode_penerbangan):
 # third endpoint
 ### TAMBAH PENERBANGAN -- POST method --
 @app.route('/bookings/<total_harga>/<kode_penerbangan>/<jumlah_tiket>', methods=['POST'])
-def book_ticket(total_harga, kode_penerbangan, jumlah_tiket):
+def book_ticket(total_harga, kode_penerbangan, jumlah_tiket, NIK, email):
 
     cursor = mysql.connection.cursor()
 
@@ -468,10 +468,10 @@ def book_ticket(total_harga, kode_penerbangan, jumlah_tiket):
     hash_object = hashlib.sha1(unique_id.encode())  # Create a SHA-1 hash object
     kode_pemesanan = hash_object.hexdigest()[:5]  # Extract the first 5 characters of the hash
 
-    query = '''INSERT INTO Pemesanan (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga)
-               VALUES (%s, %s, %s, %s)
+    query = '''INSERT INTO Pemesanan (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga, NIK, email)
+               VALUES (%s, %s, %s, %s, %s, %s)
             '''
-    values = (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga)
+    values = (kode_pemesanan, kode_penerbangan, jumlah_tiket, total_harga, NIK, email)
     cursor.execute(query, values)
 
     cursor.execute('''
