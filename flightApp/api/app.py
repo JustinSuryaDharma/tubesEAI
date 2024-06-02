@@ -498,7 +498,7 @@ def book_ticket(total_harga, kode_penerbangan, jumlah_tiket, nik, email):
 
     Your booking has been confirmed.
 
-    Booking Details:
+    Booking Invoice Details:
     Kode Pemesanan: {kode_pemesanan}
     Kode Penerbangan: {kode_penerbangan}
     Jumlah Tiket: {jumlah_tiket}
