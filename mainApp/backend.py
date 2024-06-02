@@ -1,5 +1,7 @@
 from datetime import datetime
 from flask import Flask, jsonify, request, render_template, url_for
+from external import get_coordinates, get_local_time, get_weather
+
 import requests
 
 app = Flask(__name__)
@@ -44,11 +46,16 @@ def get_attraction():
     if city:
         attraction_info = filtered_attr(city)
         article_info = filtered_article(city)
+        # lat, lon = get_coordinates(city)
+        # local_time = get_local_time(lat, lon)[0]
+        # weather = get_weather(lat, lon)
         combined_info = {
           "attraction": attraction_info,
           "articles": article_info
         }
-        return render_template('article.html', data_city=combined_info, data=flight, datetime=datetime, siti=city)
+        return render_template('article.html', data_city=combined_info, data=flight, datetime=datetime, siti=city, 
+                            #    time=local_time, air=weather
+                               )
     else:
         return jsonify({'error': 'Location parameter is required'}), 400
 
@@ -209,6 +216,26 @@ def book():
     response = requests.post(url, headers=headers)
 
     return render_template('index.html', response=response)
+
+@app.route('/cityinfo', methods=['POST'])
+def get_city_info():
+    city = request.args.get('location')
+    if not city:
+        return "City name is required", 400
+    
+    try:
+        lat, lon = get_coordinates(city)
+        local_time = get_local_time(lat, lon)
+        weather = get_weather(lat, lon)
+        return jsonify({
+            'city': city,
+            'latitude': lat,
+            'longitude': lon,
+            'local_time': local_time,
+            'air': weather
+        })
+    except Exception as e:
+        return str(e), 500
 
 if __name__ =="__main__":
   app.run(debug=True, port=5009)
