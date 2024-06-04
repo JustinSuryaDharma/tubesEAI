@@ -8,6 +8,11 @@
       href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
       rel="stylesheet"
     />
+    <link href="css/style.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/linearicons.css') }}"
@@ -59,32 +64,46 @@
 
     <title>{{ siti }}</title>
   </head>
-  <body>
-    <div
-      class="tm-home-img-container hidden lg:block w-full h-80 overflow-hidden"
-    >
-      <img
-        src="https://i.pinimg.com/originals/1c/0b/4a/1c0b4aba1dc77f3a5d840e6c17e13e72.jpg"
-        alt="Image"
-        class="object-cover w-full h-full"
-        style="object-position: center"
-      />
-    </div>
-
-    <section class="tm-section py-16">
-      <div class="container mx-auto">
-        <div class="text-center">
-          <h1 class="text-5xl text-gray-800 font-bold mb-4">
-            Welcome to {{ siti }}
-          </h1>
-          <p class="text-lg text-gray-600">
-            Know more about {{ siti }} and Book a flight now!
-          </p>
-          <br />
-          <hr />
+    <body>
+      <div class="relative-container">
+        <div class="tm-home-img-container hidden lg:block w-full h-80 overflow-hidden">
+          <img src="https://bobobox.com/blog/wp-content//uploads/2021/02/1-4YaszxcTRv74YB2leJfaGw.jpeg" alt="Image" />
         </div>
+    
+        <section class="tm-section py-16">
+          <div class="container mx-auto">
+            <div class="text-center">
+              <h1 class="text-5xl text-white font-bold mb-4">Welcome to {{ siti }}</h1>
+              <p class="text-lg text-white">Know more about {{ siti }} and Book a flight now!</p>
+              <br />
+              <hr />
+            </div>
+          </div>
+        </section>
+      </div>
 
-        <br><br>
+  <!-- New code -->
+  <section>
+    <div class="container mx-auto">
+      <div class="text-center">
+        <h1 class="text-3xl text-gray-800 font-bold mb-4 pt-30">Local Time and Air Quality</h1>
+        <div class="flex justify-center align-items-center">
+          <div class="shape">
+            <p>Local Time: <strong> {{ time.LocalTimeNow }} </strong></p>
+          </div>
+          <div class="shape">
+            <p>Time Zone: <strong> {{ time.TimeZoneId }} </strong></p>
+          </div>
+          <div class="shape">
+            <p>Overall AQI: <strong> {{ air.overall_aqi }} </strong> </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+    
+        <br /><br />
+      <section>
         <h1
           class="text-3xl text-gray-800 font-bold mb-4"
           style="text-align: center"
@@ -98,9 +117,12 @@
           <div
             class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
           >
-            <img class="rounded-t-lg mb-4 w-full"
-            src="{{ attractionp.imageUrl }}" alt="img"
-            width="500px" />
+            <img
+              class="rounded-t-lg mb-4 w-full"
+              src="{{ attractionp.imageUrl }}"
+              alt="img"
+              width="500px"
+            />
             <div class="p-5">
               <a href="#">
                 <h5
@@ -110,15 +132,18 @@
                 </h5>
               </a>
               <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">
-                {{ attractionp.description }}
+                {{ attractionp.description|truncate(400) }}
               </p>
             </div>
           </div>
           {% endfor %}
         </div>
+      </section>
 
-
-        <br><hr><br><br>
+        <br />
+        <hr />
+        <br /><br />
+        <section>
         <h1
           class="text-3xl text-gray-800 font-bold mb-4"
           style="text-align: center"
@@ -142,7 +167,7 @@
                 </h5>
               </a>
               <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">
-                {{ article.content }}
+                {{ article.content|truncate(100) }}
               </p>
               <a
                 href="/post"
@@ -172,7 +197,9 @@
       </div>
     </section>
 
-    <br><hr><br><br>
+    <br />
+    <hr />
+    <br /><br />
     <!-- INI CAROUSEL -->
     <div class="container">
       <h1
@@ -190,7 +217,9 @@
               <div class="col-lg-4">
                 <div class="card mb-3">
                   <div class="card-body">
-                    <h2 class="ms-3 text-2xl font-bold">{{ data[j]['nama_maskapai'] }}</h2>
+                    <h2 class="ms-3 text-2xl font-bold">
+                      {{ data[j]['nama_maskapai'] }}
+                    </h2>
                     <p class="ms-3">{{ data[j]['kode_penerbangan'] }}</p>
                     <div
                       class="rounded-pill border p-1 ms-3"
@@ -237,11 +266,7 @@
           role="button"
           data-slide="prev"
         >
-          <span
-            class="carousel-control-prev-icon"
-            aria-hidden="true"
-            style="color: red !important"
-          ></span>
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
         </a>
         <a
@@ -250,22 +275,19 @@
           role="button"
           data-slide="next"
         >
-          <span
-            class="carousel-control-next-icon"
-            aria-hidden="true"
-            style="color: red !important"
-          ></span>
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
       </div>
+
+      <div>
+        <a href="/flights" class="btn">Go to Airplane Ticket Website</a>
+      </div>
     </div>
 
-    <footer class="tm-footer bg-gray-900 text-gray-400 py-12">
-      <div class="container mx-auto">
-        <!-- Footer content here -->
-      </div>
-    </footer>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{{ url_for('static', filename='js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>

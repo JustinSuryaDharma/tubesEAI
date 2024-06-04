@@ -1,0 +1,109 @@
+.dropdown-button {
+  color: #1f2937; /* text-gray-900 */
+  background: linear-gradient(
+    to right,
+    #fecaca,
+    #fca5a5,
+    #fde68a
+  ); /* from-red-200 via-red-300 to-yellow-200 */
+  transition: background 0.3s ease;
+  padding: 0.625rem 1.25rem; /* px-5 py-2.5 */
+  font-size: 0.875rem; /* text-sm */
+  border-radius: 0.5rem; /* rounded-lg */
+  margin-bottom: 0.5rem; /* mb-2 */
+  margin-right: 0.5rem; /* me-2 */
+  display: inline-block;
+  text-align: center; /* text-center */
+  text-decoration: none;
+}
+
+.dropdown-button:hover {
+  background: linear-gradient(
+    to bottom left,
+    #fecaca,
+    #fca5a5,
+    #fde68a
+  ); /* hover:bg-gradient-to-bl */
+}
+
+.dropdown-button:focus {
+  outline: none;
+  kerning: 0.25rem solid #fee2e2; /* focus:ring-4 focus:ring-red-100 */
+}
+
+.dropdown-button:focus-dark {
+  kerning: 0.25rem solid #feb2b2; /* dark:focus:ring-red-400 */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: red;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  width: 50px;
+  height: 50px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.5
+  ); /* Add a background to make the buttons visible */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-control-prev {
+  left: -60px;
+}
+
+.carousel-control-next {
+  right: -60px;
+}
+
+.carousel-item {
+  transition: transform 0.6s ease;
+}
+
+.relative-container {
+  position: relative;
+}
+
+.tm-home-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.tm-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* CSS Styles */
+.shape {
+  width: 200px; /* Adjust width as needed */
+  height: 100px; /* Adjust height as needed */
+  background-color: #f0f0f0; /* Change to desired background color */
+  border: 2px solid #ccc; /* Change to desired border color */
+  border-radius: 10px; /* Adjust border radius as needed */
+  padding: 20px; /* Adjust padding as needed */
+  text-align: center;
+  margin: 0 10px; /* Add margin between shapes */
+}
