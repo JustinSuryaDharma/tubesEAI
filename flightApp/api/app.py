@@ -532,22 +532,22 @@ def book_ticket(total_harga, kode_penerbangan, jumlah_tiket, nik, email):
 
 # third endpoint
 ### EDIT PENERBANGAN -- PUT method --
-@app.route('/updateBandara/<IATA>/<nama_bandara>/<nama_kota>/nama_negara>', methods=['PUT'])
-def update_flight(kode_penerbangan, nama_bandara, nama_kota, nama_negara, IATA):
+@app.route('/updateBandara/<IATA>/<nama_bandara>/<nama_kota>/<nama_negara>', methods=['PUT'])
+def update_flight(IATA, nama_bandara, nama_kota, nama_negara):
     cursor = mysql.connection.cursor()
-    query = ('''UPDATE Bandara
-            SET nama_bandara = %s, nama_kota = %s, nama_negara = %s
-            WHERE IATA = %s
-            ''', (nama_bandara, nama_kota, nama_negara, IATA))
-    cursor.execute(query)
+    query = '''UPDATE Bandara
+               SET nama_bandara = %s, nama_kota = %s, nama_negara = %s
+               WHERE IATA = %s'''
+    cursor.execute(query, (nama_bandara, nama_kota, nama_negara, IATA))
     mysql.connection.commit()
     cursor.close()
     return jsonify({
         "status_code": 201,
-        "status": "add success",
+        "status": "update success",
         "message": "Bandara updated successfully",
         "timestamp": datetime.now()
     }), 201
+
 
 
 
