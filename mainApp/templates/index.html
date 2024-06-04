@@ -1,19 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="css/style.css"></script>
     <title>Tourism or Flight</title>
-</head>
-<body style="background-image: url(https://images6.alphacoders.com/127/1279674.jpg);" class="flex justify-center items-center w-full h-screen bg-no-repeat bg-center bg-cover">
+  </head>
+  <body
+    style="
+      background-image: url(https://images6.alphacoders.com/127/1279674.jpg);
+    "
+    class="flex justify-center items-center w-full h-screen bg-no-repeat bg-center bg-cover"
+  >
     <div class="text-center font-serif">
-        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Liburan Rek</h1>
-        <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-white">What would you like to do ?</p>
-        <button type="button" class=" text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="/flights">Flight</a></button>
+      <h1
+        class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+      >
+        Liburan Rek
+      </h1>
+      <p
+        class="mb-6 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-white"
+      >
+        Where do you want to go?
+      </p>
+      
 
-        <button type="button" class="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"><a href="/search">Destination Info</a></button>
-        
+      <form
+        id="locationForm"
+        class="mx-auto mb-8"
+        action="/tourism"
+        method="get"
+      >
+      <select
+      id="locationInput"
+      class="form-select block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+      name="location"
+      onfocus="this.placeholder = ''"
+      onblur="this.placeholder = 'My Destination'"
+      onchange="updateLocation()"
+    >
+      <option value="" disabled selected>My Destination</option>
+      <option value="Salatiga">Salatiga</option>
+      <option value="destination2">Destination 2</option>
+      <option value="destination3">Destination 3</option>
+      <!-- Add more options as needed -->
+    </select>
+        <div class="flex justify-center mt-2">
+          <button
+            type="submit"
+            name="submit"
+            onclick="updateLocation()"
+            class="text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          >
+            Go!
+          </button>
+        </div>
+      </form>
     </div>
-</body>
+
+    <script>
+      function updateLocation() {
+        var locationValue = document.getElementById("locationInput").value;
+        var formAction =
+          "/tourism?location=" + encodeURIComponent(locationValue);
+        document.getElementById("locationForm").action = formAction;
+      }
+    </script>
+  </body>
 </html>
