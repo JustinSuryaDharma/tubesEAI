@@ -6,6 +6,8 @@ import requests
 
 app = Flask(__name__)
 
+city = None
+
 # get attractions
 def filtered_attr(city):
   response_attraction = requests.get(f'http://localhost:3000/filterattractions?location={city}')
@@ -29,12 +31,11 @@ def show_index():
 
 @app.route('/search')
 def search_city():
-    city = request.args.get('location')
     return render_template('search.html')
-
   
 @app.route('/tourism')
 def get_attraction():
+    global city 
     city = request.args.get('location')
     
     url = "http://localhost:5000/flights/to/{}".format(city)
@@ -64,7 +65,7 @@ def get_attraction():
 
 @app.route('/post')
 def show_post():
-    city = request.args.get('location')
+    global city
     article_info = filtered_article(city)
     return render_template('post.html',siti=city, article_info=article_info)
 
