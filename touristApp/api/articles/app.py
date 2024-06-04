@@ -99,6 +99,7 @@ def filtered_articles():
 
     return article_schema.jsonify(articles, many=True)
 
+
 # server
 if __name__ == '__main__':
   app.run(debug=True, port=5500)
