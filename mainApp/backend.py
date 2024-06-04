@@ -27,7 +27,9 @@ def show_index():
 
 @app.route('/search')
 def search_city():
+    city = request.args.get('location')
     return render_template('search.html')
+
   
 @app.route('/tourism')
 def get_attraction():
@@ -52,6 +54,12 @@ def get_attraction():
     else:
         return jsonify({'error': 'Location parameter is required'}), 400
 
+
+@app.route('/post')
+def show_post():
+    city = request.args.get('location')
+    article_info = filtered_article(city)
+    return render_template('post.html',siti=city, article_info=article_info)
 
 @app.route('/flights')
 def home():
