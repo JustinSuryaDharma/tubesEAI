@@ -204,11 +204,13 @@ def book():
     total_harga = request.form.get('hiddenTotalHarga')
     kode_penerbangan = request.form.get('hiddenKodePenerbangan')
     jumlah_tiket = request.form.get('jumlahTiket')
+    nik = request.form.get('nik')
+    email = request.form.get('email')
 
-    if not (total_harga and kode_penerbangan and jumlah_tiket):
+    if not (total_harga and kode_penerbangan and jumlah_tiket and nik and email):
         return "Invalid form data", 400
 
-    url = "http://localhost:5000/bookings/{}/{}/{}".format(total_harga,kode_penerbangan,jumlah_tiket)
+    url = "http://localhost:5000/bookings/{}/{}/{}/{}/{}".format(total_harga,kode_penerbangan,jumlah_tiket,nik,email)
     headers = {
             "Authorization": "justin",
             "Content-Type": "application/json"
