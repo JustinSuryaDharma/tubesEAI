@@ -6,6 +6,8 @@ import requests
 
 app = Flask(__name__)
 
+city = None
+
 # get attractions
 def filtered_attr(city):
   response_attraction = requests.get(f'http://localhost:3000/filterattractions?location={city}')
@@ -33,6 +35,7 @@ def search_city():
   
 @app.route('/tourism')
 def get_attraction():
+    global city 
     city = request.args.get('location')
     
     url = "http://localhost:5000/flights/to/{}".format(city)
@@ -59,6 +62,12 @@ def get_attraction():
     else:
         return jsonify({'error': 'Location parameter is required'}), 400
 
+
+@app.route('/post')
+def show_post():
+    global city
+    article_info = filtered_article(city)
+    return render_template('post.html',siti=city, article_info=article_info)
 
 @app.route('/flights')
 def home():
