@@ -1,105 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/linearicons.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/magnific-popup.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/nice-select.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/animate.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/justin.css') }}">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/linearicons.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/font-awesome.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/magnific-popup.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/jquery-ui.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/nice-select.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/animate.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/owl.carousel.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/justin.css') }}"
+    />
+  </head>
+  <body>
     {% for i in data %}
     <div class="row">
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary">Detail Penerbangan</h2>
-                </div>
-                <div class="card-body">
-                    <h3 class="card-title">{{ i['kode_penerbangan'] }}</h3>
-                    <h4 class="card-subtitle mb-2 text-body-secondary">{{ i['nama_maskapai'] }}</h4>
-                    <hr>
-                    <div class="row">
-                        <div class="col-6">
-                            <h5>Departure</h5>
-                            <p>Departure Airport: {{ i['departure_airport'] }}</p>
-                            <p>Departure City: {{ i['departure_city'] }}</p>
-                            <p>Departure Country: {{ i['departure_country'] }}</p>
-                            <p>Departure Time: {{ i['dept_time'] }}</p>
-                        </div>
-                        <div class="col-6">
-                            <h5>Arrival</h5>
-                            <p>Arrival Airport: {{ i['arrival_airport'] }}</p>
-                            <p>Arrival City: {{ i['arrival_city'] }}</p>
-                            <p>Arrival Country: {{ i['arrival_country'] }}</p>
-                            <p>Arrival Time: {{ i['arriv_time'] }}</p>
-                        </div>
-                    </div>
-                </div>
+      <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h2 class="m-0 font-weight-bold text-primary">
+              Detail Penerbangan
+            </h2>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">{{ i['kode_penerbangan'] }}</h3>
+            <h4 class="card-subtitle mb-2 text-body-secondary">
+              {{ i['nama_maskapai'] }}
+            </h4>
+            <hr />
+            <div class="row">
+              <div class="col-6">
+                <h5>Departure</h5>
+                <p>Departure Airport: {{ i['departure_airport'] }}</p>
+                <p>Departure City: {{ i['departure_city'] }}</p>
+                <p>Departure Country: {{ i['departure_country'] }}</p>
+                <p>Departure Time: {{ i['dept_time'] }}</p>
+              </div>
+              <div class="col-6">
+                <h5>Arrival</h5>
+                <p>Arrival Airport: {{ i['arrival_airport'] }}</p>
+                <p>Arrival City: {{ i['arrival_city'] }}</p>
+                <p>Arrival Country: {{ i['arrival_country'] }}</p>
+                <p>Arrival Time: {{ i['arriv_time'] }}</p>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
 
-        <div class="col-xl-4 col-lg-5">
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h2 class="m-0 font-weight-bold text-primary">Detail Pembayaran</h2>
-                </div>
-                <div class="card-body">
-                    <p id="harga" data-harga="{{ i['harga'] }}">Harga: Rp {{ '{:,.0f}'.format(i['harga']) }}</p>
-                    <form method="POST" action="/booking">
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" id="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nik">NIK:</label>
-                            <input type="text" id="nik" name="nik" class="form-control" pattern="\d{16}" title="NIK harus terdiri dari 16 digit" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="jumlahTiket{{ loop.index }}">Jumlah Tiket:</label>
-                            <input type="number" id="jumlahTiket{{ loop.index }}" name="jumlahTiket" value="1" min="1" max="{{ i['jumlah_tiket'] }}" data-harga="{{ i['harga'] }}" onchange="calculateTotal(this)" class="form-control">
-                        </div>
-                        <hr>
-                        <h3 id="totalHarga{{ loop.index }}">Total Harga: Rp {{ '{:,.0f}'.format(i['harga']) }}</h3>
-                        <hr>
-                        <input type="hidden" id="hiddenTotalHarga{{ loop.index }}" name="hiddenTotalHarga" value="{{ i['harga'] }}">
-                        <input type="hidden" id="hiddenJumlahTiket{{ loop.index }}" name="hiddenJumlahTiket" value="1">
-                        <input type="hidden" id="hiddenKodePenerbangan" name="hiddenKodePenerbangan" value="{{ i['kode_penerbangan'] }}">
-                        <hr>
-                        <button type="submit" class="btn btn-warning">Checkout</button>
-                    </form>
-                </div>
-            </div>
+      <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+          <div class="card-header py-3">
+            <h2 class="m-0 font-weight-bold text-primary">Detail Pembayaran</h2>
+          </div>
+          <div class="card-body">
+            <p id="harga" data-harga="{{ i['harga'] }}">
+              Harga: Rp {{ '{:,.0f}'.format(i['harga']) }}
+            </p>
+            <form method="POST" action="/booking">
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="nik">NIK:</label>
+                <input
+                  type="text"
+                  id="nik"
+                  name="nik"
+                  class="form-control"
+                  pattern="\d{16}"
+                  title="NIK harus terdiri dari 16 digit"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="jumlahTiket{{ loop.index }}">Jumlah Tiket:</label>
+                <input
+                  type="number"
+                  id="jumlahTiket{{ loop.index }}"
+                  name="jumlahTiket"
+                  value="1"
+                  min="1"
+                  max="{{ i['jumlah_tiket'] }}"
+                  data-harga="{{ i['harga'] }}"
+                  onchange="calculateTotal(this)"
+                  class="form-control"
+                />
+              </div>
+              <hr />
+              <h3 id="totalHarga{{ loop.index }}">
+                Total Harga: Rp {{ '{:,.0f}'.format(i['harga']) }}
+              </h3>
+              <hr />
+              <input
+                type="hidden"
+                id="hiddenTotalHarga{{ loop.index }}"
+                name="hiddenTotalHarga"
+                value="{{ i['harga'] }}"
+              />
+              <input
+                type="hidden"
+                id="hiddenJumlahTiket{{ loop.index }}"
+                name="hiddenJumlahTiket"
+                value="1"
+              />
+              <input
+                type="hidden"
+                id="hiddenKodePenerbangan"
+                name="hiddenKodePenerbangan"
+                value="{{ i['kode_penerbangan'] }}"
+              />
+              <hr />
+              <button type="submit" class="btn btn-warning">Checkout</button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
     {% endfor %}
 
     <script>
-        function calculateTotal(input) {
-            var jumlahTiket = parseInt(input.value);
-            var hargaPerTiket = parseInt(input.getAttribute('data-harga'));
-            var totalHarga = jumlahTiket * hargaPerTiket;
-            var index = input.id.replace('jumlahTiket', '');
-            document.getElementById('totalHarga' + index).textContent = 'Total Harga: Rp ' + totalHarga.toLocaleString();
-            document.getElementById('hiddenTotalHarga' + index).value = totalHarga;
-            document.getElementById('hiddenJumlahTiket' + index).value = jumlahTiket;
-        }
+      function calculateTotal(input) {
+        var jumlahTiket = parseInt(input.value);
+        var hargaPerTiket = parseInt(input.getAttribute('data-harga'));
+        var totalHarga = jumlahTiket * hargaPerTiket;
+        var index = input.id.replace('jumlahTiket', '');
+        document.getElementById('totalHarga' + index).textContent =
+          'Total Harga: Rp ' + totalHarga.toLocaleString();
+        document.getElementById('hiddenTotalHarga' + index).value = totalHarga;
+        document.getElementById('hiddenJumlahTiket' + index).value =
+          jumlahTiket;
+      }
     </script>
 
     <script src="{{ url_for('static', filename='js/vendor/jquery-2.2.4.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script> <!-- Update the API key -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <!-- Update the API key -->
     <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
     <script src="{{ url_for('static', filename='js/easing.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/hoverIntent.js') }}"></script>
@@ -110,5 +196,5 @@
     <script src="{{ url_for('static', filename='js/owl.carousel.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/mail-script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-</body>
+  </body>
 </html>

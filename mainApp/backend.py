@@ -53,6 +53,11 @@ def get_ticket_by_name(name):
         return response.json()
     else:
         return None
+    
+# get package data
+def get_package_data():
+    response_package = requests.get('http://127.0.0.1:5002/paket')
+    return response_package.json()
 
 # app routes
 @app.route('/')
@@ -115,10 +120,10 @@ def beli_tiket(id):
     # Here you would add your database update logic to save the new stock amount
     return jsonify({"success": True, "message": "Pembelian tiket berhasil"}), 200
 
-@app.route('/confirmationTicket')
-def confirmation_ticket():
-    return "Pembelian tiket berhasil! Ini adalah halaman konfirmasi."
-
+@app.route('/package')
+def get_package():
+    paket = get_package_data()
+    return render_template('package.html', pack=paket)
     
 @app.route('/post')
 def show_post():

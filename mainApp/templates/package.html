@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paket Wisata Ke Salatiga</title>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .more-content {
+        display: none;
+      }
+      .more-link {
+        color: blue;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="mb-4">Paket Wisata Ke Salatiga</h1>
+      <div id="paket-container" class="row">
+        <!-- Data will be appended here -->
+        {% for i in pack %}
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ i.paket }}</h5>
+              <p class="card-text">
+                Destinasi 1: <strong>{{ i.destinasi_1 }}</strong>
+              </p>
+              <p class="card-text text-sm">
+                {{ i.deskripsi_1[:100] }}{% if i.deskripsi_1|length > 100 %}
+                <span class="more-content">{{ i.deskripsi_1[100:] }}</span>
+                <span class="more-link" onclick="toggleReadMore(this)"
+                  >Read more</span
+                >
+                {% endif %}
+              </p>
+
+              <p class="card-text">
+                Destinasi 2: <strong>{{ i.destinasi_2 }}</strong>
+              </p>
+              <p class="card-text">
+                {{ i.deskripsi_2[:100] }}{% if i.deskripsi_2|length > 100 %}
+                <span class="more-content">{{ i.deskripsi_2[100:] }}</span>
+                <span class="more-link" onclick="toggleReadMore(this)"
+                  >Read more</span
+                >
+                {% endif %}
+              </p>
+              <p class="card-text">
+                Destinasi 3: <strong>{{ i.destinasi_3 }}</strong>
+              </p>
+              <p class="card-text">
+                {{ i.deskripsi_3[:100] }}{% if i.deskripsi_3|length > 100 %}
+                <span class="more-content">{{ i.deskripsi_3[100:] }}</span>
+                <span class="more-link" onclick="toggleReadMore(this)"
+                  >Read more</span
+                >
+                {% endif %}
+              </p>
+              <p class="card-text">
+                Destinasi 4: <strong>{{ i.destinasi_4 }}</strong>
+              </p>
+              <p class="card-text">
+                {{ i.deskripsi_4[:100] }}{% if i.deskripsi_4|length > 100 %}
+                <span class="more-content">{{ i.deskripsi_4[100:] }}</span>
+                <span class="more-link" onclick="toggleReadMore(this)"
+                  >Read more</span
+                >
+                {% endif %}
+              </p>
+              <p class="card-text">
+                Destinasi 5: <strong>{{ i.destinasi_5 }}</strong>
+              </p>
+              <p class="card-text">
+                {{ i.deskripsi_5[:100] }}{% if i.deskripsi_5|length > 100 %}
+                <span class="more-content">{{ i.deskripsi_5[100:] }}</span>
+                <span class="more-link" onclick="toggleReadMore(this)"
+                  >Read more</span
+                >
+                {% endif %}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+
+        <div class="container mt-3 text-center mb-1">
+          <a
+            class="btn btn-primary btn-lg"
+            href="https://wa.me/6281338946900?text=Terima%20kasih%20telah%20menghubungi%0AALAMY%20Tours%20%26%20Travel%20Saya%20ingin%20pesan%20tiket%20pesawat%20dengan%20keterangan%20:%0ANama%20:%0AMaskapai%20:%0AJumlah%20Tiket%20:"
+            target="_blank"
+            >Contact Alamy Tours untuk Melakukan Pemesanan Paket</a
+          >
+        </div>
+        <div class="container mb-4 text-center">
+          <a href="javascript:history.back()" class="btn btn-link"
+            >Back to Previous</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function toggleReadMore(element) {
+        const moreContent = element.previousElementSibling;
+        const isHidden = moreContent.style.display === 'none';
+        moreContent.style.display = isHidden ? 'inline' : 'none';
+        element.textContent = isHidden ? 'Read less' : 'Read more';
+      }
+    </script>
+  </body>
+</html>

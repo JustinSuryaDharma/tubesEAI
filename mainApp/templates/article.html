@@ -69,8 +69,17 @@
         class="tm-home-img-container hidden lg:block w-full h-80 overflow-hidden"
       >
         <img
-          src="https://bobobox.com/blog/wp-content//uploads/2021/02/1-4YaszxcTRv74YB2leJfaGw.jpeg"
+          src="{% if siti == 'Salatiga' %}
+              https://bobobox.com/blog/wp-content//uploads/2021/02/1-4YaszxcTRv74YB2leJfaGw.jpeg
+            {% elif siti == 'Bandung' %}
+              https://api2.kemenparekraf.go.id/storage/app/uploads/public/65e/534/608/65e5346086f1a976234330.jpg
+            {% elif siti == 'Afrika' %}
+              https://awsimages.detik.net.id/community/media/visual/2022/01/31/samara-private-game-reserve-3.jpeg?w=1200
+            {% else %}
+              default-image-url.jpg
+            {% endif %}"
           alt="Image"
+          class="img-fluid mb-4"
         />
       </div>
 
@@ -82,6 +91,9 @@
             </h1>
             <p class="text-lg text-white">
               Know more about {{ siti }} and Book a flight now!
+            </p>
+            <p class="text-blue-200">
+              <a href="/"><u>Back to home page</u></a>
             </p>
             <br />
             <hr />
@@ -115,7 +127,7 @@
     <br /><br />
     <section>
       <h1
-        class="text-3xl text-gray-800 font-bold mb-4"
+        class="text-3xl text-gray-800 font-bold mb-2"
         style="text-align: center"
       >
         Attraction in {{ siti }}
@@ -154,6 +166,21 @@
           </div>
         </div>
         {% endfor %}
+      </div>
+    </section>
+
+    <section
+      class="sectionEleven container-fluid position-relative rounded text-center"
+    >
+      <div class="text-center mt-2 pt-5" style="width: 90%; margin: auto">
+        <h2 class="fs-lg-1 fs-md-2 fs-sm-3 text-center fw-bold pb-3">
+          Mau ke semua tempat dengan harga lebih murah?
+        </h2>
+        <a class="pt-3" href="/package"
+          ><button type="button" class="btn btn-primary mb-5">
+            Beli tiket Paket Wisata Sekarang!
+          </button></a
+        >
       </div>
     </section>
 
@@ -296,7 +323,7 @@
         </a>
       </div>
 
-      <div>
+      <div class="btn btn-link pb-5">
         <a href="/flights" class="btn">Go to Airplane Ticket Website</a>
       </div>
     </div>
