@@ -107,3 +107,10 @@
   text-align: center;
   margin: 0 10px; /* Add margin between shapes */
 }
+
+.image-crop {
+  max-height: 300px; /* Set your desired max height */
+  width: 100%; /* Ensure it takes the full width available */
+  object-fit: cover; /* This will crop the image if it exceeds max-height */
+  object-position: center; /* Center the image within its container */
+}

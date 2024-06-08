@@ -8,7 +8,6 @@
       href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700"
       rel="stylesheet"
     />
-    <link href="css/style.css" rel="stylesheet" />
     <link
       rel="stylesheet"
       href="{{ url_for('static', filename='css/style.css') }}"
@@ -64,136 +63,153 @@
 
     <title>{{ siti }}</title>
   </head>
-    <body>
-      <div class="relative-container">
-        <div class="tm-home-img-container hidden lg:block w-full h-80 overflow-hidden">
-          <img src="https://bobobox.com/blog/wp-content//uploads/2021/02/1-4YaszxcTRv74YB2leJfaGw.jpeg" alt="Image" />
-        </div>
-    
-        <section class="tm-section py-16">
-          <div class="container mx-auto">
-            <div class="text-center">
-              <h1 class="text-5xl text-white font-bold mb-4">Welcome to {{ siti }}</h1>
-              <p class="text-lg text-white">Know more about {{ siti }} and Book a flight now!</p>
-              <br />
-              <hr />
-            </div>
-          </div>
-        </section>
+  <body>
+    <div class="relative-container">
+      <div
+        class="tm-home-img-container hidden lg:block w-full h-80 overflow-hidden"
+      >
+        <img
+          src="https://bobobox.com/blog/wp-content//uploads/2021/02/1-4YaszxcTRv74YB2leJfaGw.jpeg"
+          alt="Image"
+        />
       </div>
 
-  <!-- New code -->
-  <section>
-    <div class="container mx-auto">
-      <div class="text-center">
-        <h1 class="text-3xl text-gray-800 font-bold mb-4 pt-30">Local Time and Air Quality</h1>
-        <div class="flex justify-center align-items-center">
-          <div class="shape">
-            <p>Local Time: <strong> {{ time.LocalTimeNow }} </strong></p>
+      <section class="tm-section py-16">
+        <div class="container mx-auto">
+          <div class="text-center">
+            <h1 class="text-5xl text-white font-bold mb-4">
+              Welcome to {{ siti }}
+            </h1>
+            <p class="text-lg text-white">
+              Know more about {{ siti }} and Book a flight now!
+            </p>
+            <br />
+            <hr />
           </div>
-          <div class="shape">
-            <p>Time Zone: <strong> {{ time.TimeZoneId }} </strong></p>
-          </div>
-          <div class="shape">
-            <p>Overall AQI: <strong> {{ air.overall_aqi }} </strong> </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-    
-        <br /><br />
-      <section>
-        <h1
-          class="text-3xl text-gray-800 font-bold mb-4"
-          style="text-align: center"
-        >
-          Attraction in {{ siti }}
-        </h1>
-
-        <div class="flex flex-row flex-wrap justify-center space-x-6 mt-8">
-          {% for attractionp in data_city.attraction %}
-
-          <div
-            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
-          >
-            <img
-              class="rounded-t-lg mb-4 w-full"
-              src="{{ attractionp.imageUrl }}"
-              alt="img"
-              width="500px"
-            />
-            <div class="p-5">
-              <a href="#">
-                <h5
-                  class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
-                >
-                  {{ attractionp.name }}
-                </h5>
-              </a>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">
-                {{ attractionp.description|truncate(400) }}
-              </p>
-            </div>
-          </div>
-          {% endfor %}
         </div>
       </section>
+    </div>
 
-        <br />
-        <hr />
-        <br /><br />
-        <section>
-        <h1
-          class="text-3xl text-gray-800 font-bold mb-4"
-          style="text-align: center"
-        >
-          Articles about {{ siti }}
-        </h1>
-        <div class="flex flex-row flex-wrap justify-center space-x-6 mt-8">
-          {% for article in data_city.articles %}
-          <div
-            class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
-          >
-            <!--<a href="#">
-                    <img class="rounded-t-lg mb-4 w-full" src="{{ article.imageUrl }}" alt="Image" />
-                </a> -->
-            <div class="p-5">
-              <a href="/post">
-                <h5
-                  class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
-                >
-                  {{ article.title }}
-                </h5>
-              </a>
-              <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">
-                {{ article.content|truncate(100) }}
-              </p>
-              <a
-                href="/post"
-                class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Read more
-                <svg
-                  class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 14 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M1 5h12m0 0L9 1m4 4L9 9"
-                  />
-                </svg>
-              </a>
+    <!-- New code -->
+    <section>
+      <div class="container mx-auto">
+        <div class="text-center">
+          <h1 class="text-3xl text-gray-800 font-bold mb-4 pt-30">
+            Local Time and Air Quality
+          </h1>
+          <div class="flex justify-center align-items-center">
+            <div class="shape">
+              <p>Local Time: <strong> API NYA TAK MATIIN WLE </strong></p>
+            </div>
+            <div class="shape">
+              <p>Time Zone: <strong> API NYA TAK MATIIN WLE </strong></p>
+            </div>
+            <div class="shape">
+              <p>Overall AQI: <strong> API NYA TAK MATIIN WLE </strong></p>
             </div>
           </div>
-          {% endfor %}
         </div>
+      </div>
+    </section>
+
+    <br /><br />
+    <section>
+      <h1
+        class="text-3xl text-gray-800 font-bold mb-4"
+        style="text-align: center"
+      >
+        Attraction in {{ siti }}
+      </h1>
+
+      <div class="flex flex-row flex-wrap justify-center space-x-6 mt-8">
+        {% for attractionp in data_city.attraction %}
+
+        <div
+          class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
+        >
+          <img
+            class="image-crop rounded-t-lg mb-4 w-full"
+            src="{{ attractionp.imageUrl }}"
+            alt="img"
+            style="height: 200px"
+          />
+          <div class="pt-2 px-4 pb-3">
+            <a href="#">
+              <h5
+                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
+              >
+                {{ attractionp.name }}
+              </h5>
+            </a>
+
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">
+              {{ attractionp.description|truncate(200) }}
+            </p>
+
+            <button type="button" class="btn btn-success">
+              <a href="/detail/{{ attractionp.name }}"
+                >Buy Ticket to {{ attractionp.name }}</a
+              >
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+
+    <br />
+    <hr />
+    <br /><br />
+    <section>
+      <h1
+        class="text-3xl text-gray-800 font-bold mb-4"
+        style="text-align: center"
+      >
+        Articles about {{ siti }}
+      </h1>
+      <div class="flex flex-row flex-wrap justify-center space-x-6 mt-8">
+        {% for article in data_city.articles %}
+        <div
+          class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg"
+        >
+          <!--<a href="#">
+                    <img class="rounded-t-lg mb-4 w-full" src="{{ article.imageUrl }}" alt="Image" />
+                </a> -->
+          <div class="p-5">
+            <a href="/post">
+              <h5
+                class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black"
+              >
+                {{ article.title }}
+              </h5>
+            </a>
+            <p class="mb-3 font-normal text-gray-700 dark:text-gray-600">
+              {{ article.content|truncate(100) }}
+            </p>
+            <a
+              href="/post"
+              class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            >
+              Read more
+              <svg
+                class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 14 10"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 5h12m0 0L9 1m4 4L9 9"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
       </div>
     </section>
 
@@ -305,36 +321,36 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
     <script>
       // Get the dropdown button and dropdown menu
-      const dropdownButton = document.getElementById("dropdownDefaultButton");
-      const dropdownMenu = document.getElementById("dropdown");
+      const dropdownButton = document.getElementById('dropdownDefaultButton');
+      const dropdownMenu = document.getElementById('dropdown');
 
       // Add event listener to toggle dropdown menu visibility
-      dropdownButton.addEventListener("click", () => {
-        dropdownMenu.classList.toggle("hidden");
+      dropdownButton.addEventListener('click', () => {
+        dropdownMenu.classList.toggle('hidden');
       });
 
       // Add event listener to city options
-      const cityOptions = document.querySelectorAll(".city-option");
-      cityOptions.forEach((option) => {
-        option.addEventListener("click", function (event) {
+      const cityOptions = document.querySelectorAll('.city-option');
+      cityOptions.forEach(option => {
+        option.addEventListener('click', function (event) {
           event.preventDefault();
           const selectedCity = this.dataset.city;
           fetch(`/tourism?location=${selectedCity}`)
-            .then((response) => response.json())
-            .then((data) => {
+            .then(response => response.json())
+            .then(data => {
               // Call function to update UI with new data
               updateUI(data);
             })
-            .catch((error) => console.error("Error fetching data:", error));
+            .catch(error => console.error('Error fetching data:', error));
         });
       });
 
       // Function to update UI with new data
       function updateUI(data) {
-        const articleContainer = document.getElementById("articleContainer");
-        articleContainer.innerHTML = ""; // Clear existing articles
+        const articleContainer = document.getElementById('articleContainer');
+        articleContainer.innerHTML = ''; // Clear existing articles
 
-        data.articles.forEach((article) => {
+        data.articles.forEach(article => {
           const articleCard = `
                 <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg">
                     <a href="#">
@@ -365,9 +381,9 @@
         input.value = location; // Ensure the value is trimmed and assigned back to the input field
 
         // If the location is not empty, update the action URL of the form
-        if (location !== "") {
-          var form = document.querySelector(".form-wrap");
-          form.action = "/tourism?location=" + encodeURIComponent(location);
+        if (location !== '') {
+          var form = document.querySelector('.form-wrap');
+          form.action = '/tourism?location=' + encodeURIComponent(location);
         }
       }
     </script>
