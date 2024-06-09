@@ -21,17 +21,16 @@ mysql = MySQL(app)
 
 
 # Email configuration for Gmail
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'testingeaixyla@gmail.com'
-app.config['MAIL_PASSWORD'] = 'yffp kahc xzqo hluf'
-app.config['MAIL_DEFAULT_SENDER'] = ('Liburan Rek', 'testingeaixyla@gmail.com')
+# app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+# app.config['MAIL_PORT'] = 587
+# app.config['MAIL_USE_TLS'] = True
+# app.config['MAIL_USE_SSL'] = False
+# app.config['MAIL_USERNAME'] = 'testingeaixyla2@gmail.com'
+# app.config['MAIL_PASSWORD'] = 'yypf qsrg nhcf fowd'
+# app.config['MAIL_DEFAULT_SENDER'] = ('Liburan Rek', 'testingeaixyla2@gmail.com')
 
-mail = Mail(app)
-
-logging.basicConfig(level=logging.INFO)
+# mail = Mail(app)
+# logging.basicConfig(level=logging.INFO)
 
 
 # first endpoint
@@ -494,26 +493,29 @@ def book_ticket(total_harga, kode_penerbangan, jumlah_tiket, nik, email):
         cursor.close()
 
         # Send confirmation email
-        msg = Message('Booking Confirmation',
-                      recipients=[email])
-        msg.body = f'''Dear Customer,
+        try:
+            msg = Message('Booking Confirmation',
+                          recipients=[email])
+            msg.body = f'''Dear Customer,
 
-    Your booking has been confirmed.
+Your booking has been confirmed.
 
-    Booking Invoice Details:
-    Kode Pemesanan: {kode_pemesanan}
-    Kode Penerbangan: {kode_penerbangan}
-    Jumlah Tiket: {jumlah_tiket}
-    Total Harga: {total_harga}
-    NIK: {nik}
+Booking Invoice Details:
+Kode Pemesanan: {kode_pemesanan}
+Kode Penerbangan: {kode_penerbangan}
+Jumlah Tiket: {jumlah_tiket}
+Total Harga: {total_harga}
+NIK: {nik}
 
-    Thank you for booking with us. YUK LIBURAN REK!
+Thank you for booking with us. YUK LIBURAN REK!
 
-    Best regards,
-    Liburan Rek
-    '''
-        mail.send(msg)
-        logging.info(f"Email sent to {email}")
+Best regards,
+Liburan Rek
+'''
+            mail.send(msg)
+            logging.info(f"Email sent to {email}")
+        except Exception as e:
+            logging.error(f"Failed to send email to {email}: {e}")
 
         return jsonify({
             "status_code": 201,
@@ -522,13 +524,12 @@ def book_ticket(total_harga, kode_penerbangan, jumlah_tiket, nik, email):
             "kode_pemesanan": kode_pemesanan,
             "timestamp": datetime.now()
         }), 201
-
     except Exception as e:
-        logging.error(f"Error occurred: {e}")
+        logging.error(f"Error in booking ticket: {e}")
         return jsonify({
             "status_code": 500,
             "status": "error",
-            "message": str(e)
+            "message": "An error occurred while booking the flight"
         }), 500
 
 
