@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: Attractions API
+  version: 1.0.0
+  description: API for managing attractions
+
+servers:
+  - url: http://localhost:3000
+
+paths:
+  /attractions:
+    get:
+      summary: Get all attractions
+      responses:
+        '200':
+          description: List of all attractions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    type:
+                      type: string
+                    location:
+                      type: string
+                    rating:
+                      type: number
+                      format: float
+                    imageUrl:
+                      type: string
+
+  /attractions/{id}:
+    post:
+      summary: Create or update an attraction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the attraction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
+                type:
+                  type: string
+                location:
+                  type: string
+                rating:
+                  type: number
+                  format: float
+                imageUrl:
+                  type: string
+      responses:
+        '200':
+          description: Attraction updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+    delete:
+      summary: Delete an attraction
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID of the attraction
+      responses:
+        '200':
+          description: Attraction deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /filterattractions:
+    get:
+      summary: Get attractions by location
+      parameters:
+        - name: location
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Location of the attractions
+      responses:
+        '200':
+          description: List of attractions filtered by location
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    type:
+                      type: string
+                    location:
+                      type: string
+                    rating:
+                      type: number
+                      format: float
+                    imageUrl:
+                      type: string
+
+  /nameattractions:
+    get:
+      summary: Get attractions by name
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Name of the attractions
+      responses:
+        '200':
+          description: List of attractions filtered by name
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    description:
+                      type: string
+                    type:
+                      type: string
+                    location:
+                      type: string
+                    rating:
+                      type: number
+                      format: float
+                    imageUrl:
+                      type: string
