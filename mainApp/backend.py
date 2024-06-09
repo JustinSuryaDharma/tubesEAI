@@ -125,11 +125,16 @@ def get_package():
     paket = get_package_data()
     return render_template('package.html', pack=paket)
     
-@app.route('/post')
-def show_post():
+@app.route('/article/<int:id>', methods=['GET'])
+def get_article(id):
     global city
     article_info = filtered_article(city)
-    return render_template('post.html',siti=city, article_info=article_info)
+    # Find the article with the given ID
+    article = next((article for article in article_info if article["id"] == id), None)
+    if article is None:
+        return "Article not found", 404
+    return render_template('post.html', article=article, siti=city)
+
 
 @app.route('/flights')
 def home():

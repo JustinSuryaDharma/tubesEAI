@@ -28,57 +28,36 @@
     </div>
 	
 	<h3>{{ siti }}</h3>
-	{% for article in article_info %}
-	<!--Title-->
 	<div class="text-center pt-16 md:pt-32">
 		<p class="text-sm md:text-base text-green-500 font-bold">{{ article.date_created }}</p>
 		<h1 class="font-bold break-normal text-3xl md:text-5xl">{{ article.title }}</h1>
 	</div>
-
+	
 	<!--image-->
 	<div class="container w-full max-w-6xl mx-auto bg-white bg-cover mt-8 rounded-lg shadow-lg" style="background-image:url('https://source.unsplash.com/collection/1118905/'); height: 75vh;"></div>
 	
 	<!--Container-->
 	<div class="container max-w-5xl mx-auto -mt-32">
-		
 		<div class="mx-0 sm:mx-6">
-			
 			<div class="bg-white w-full p-8 md:p-24 text-xl md:text-2xl text-gray-800 leading-normal rounded-lg shadow-lg" style="font-family:Georgia,serif;">
-				
 				<!--Post Content-->
-				
-
 				<!--Lead Para-->
-				
-                <h3 class="text-3xl font-bold dark:text-white">
-					{{ article.title }}
-
-				<p class="py-6">{{ article.content }}</p>				
-
-												
+				<h3 class="text-3xl font-bold dark:text-white">{{ article.title }}</h3>
+				<p class="py-6">{{ article.content }}</p>
 				<!--/ Post Content-->
-						
 			</div>
-			
 	
-				<!--Author-->
-				<div class="flex w-full items-center font-sans p-8 md:p-24">
-					<img class="w-10 h-10 rounded-full mr-4" src="http://i.pravatar.cc/300" alt="Avatar of Author">
-					<div class="flex-1">
-						<p class="text-base font-bold text-base md:text-xl leading-none">{{ article.author }}</p>
-					</div>
-					<div class="justify-end">
-
-					</div>
-				<!--/Author-->
-			
+			<!--Author-->
+			<div class="flex w-full items-center font-sans p-8 md:p-24">
+				<img class="w-10 h-10 rounded-full mr-4" src="http://i.pravatar.cc/300" alt="Avatar of Author">
+				<div class="flex-1">
+					<p class="text-base font-bold text-base md:text-xl leading-none">{{ article.author }}</p>
 				</div>
-	
-
+				<div class="justify-end"></div>
+			</div>
+			<!--/Author-->
 		</div>
-
 	</div>
-	{% endfor %}
 
 
 <!--   Scroll Top Button  -->
