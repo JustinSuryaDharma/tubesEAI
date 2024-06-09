@@ -87,7 +87,7 @@ def search():
                 # Do something with the data
             else:
                 print("Error:", response.status_code) 
-        elif departure and destination and not date:
+        elif not departure and destination and not date:
             url = "http://localhost:5000/flights/to/{}".format(destination)
             headers = {
                 "Authorization": "justin",
