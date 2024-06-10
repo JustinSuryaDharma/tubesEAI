@@ -1,0 +1,1206 @@
+openapi: 3.0.0
+info:
+  title: Flight Booking API
+  version: 1.0.0
+  description: API for managing flight bookings
+servers:
+  - url: http://localhost:5000
+paths:
+  /flights:
+    get:
+      summary: Get all flights
+      responses:
+        '200':
+          description: List of all flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  timestamp:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                        kode_pesawat:
+                          type: string
+                        kode_maskapai:
+                          type: string
+                        jumlah_tiket:
+                          type: integer
+                        dept_IATA:
+                          type: string
+                        dest_IATA:
+                          type: string
+                        dept_time:
+                          type: string
+                        arriv_time:
+                          type: string
+                        harga:
+                          type: integer
+                        departure_airport:
+                          type: string
+                        departure_city:
+                          type: string
+                        departure_country:
+                          type: string
+                        arrival_airport:
+                          type: string
+                        arrival_city:
+                          type: string
+                        arrival_country:
+                          type: string
+                        nama_maskapai:
+                          type: string
+    
+  /flights/from/{departure}/to/{destination}/on/{date}:
+    get:
+      summary: Retrieve flights based on departure, destination, and date
+      parameters:
+        - name: departure
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Departure city or country
+        - name: destination
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Destination city or country
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Date of departure (YYYY-MM-DD)
+      responses:
+        '200':
+          description: A list of flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: No flights available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Flights Available
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      example: []
+    
+  /flights/from/{departure}/to/{destination}:
+    get:
+      summary: Retrieve flights based on departure and destination
+      parameters:
+        - name: departure
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Departure city or country
+        - name: destination
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Destination city or country
+      responses:
+        '200':
+          description: A list of flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: No flights available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Flights Available
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      example: []
+
+  /flights/from/{departure}/on/{date}:
+    get:
+      summary: Retrieve flights based on departure and date
+      parameters:
+        - name: departure
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Departure city or country
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Date of departure (YYYY-MM-DD)
+      responses:
+        '200':
+          description: A list of flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: No flights available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Flights Available
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      example: []
+
+  /flights/from/{departure}:
+    get:
+      summary: Retrieve flights based on departure
+      parameters:
+        - name: departure
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Departure city or country
+      responses:
+        '200':
+          description: A list of flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: No flights available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Flights Available
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      example: []
+
+  /flights/to/{destination}/on/{date}:
+    get:
+      summary: Retrieve flights based on destination and date
+      parameters:
+        - name: destination
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Destination city or country
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Date of the flight (YYYY-MM-DD)
+      responses:
+        '200':
+          description: A list of flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: No flights available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Flights Available
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      example: []
+
+  /flights/to/{destination}:
+    get:
+      summary: Retrieve flights based on destination
+      parameters:
+        - name: destination
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Destination city or country
+      responses:
+        '200':
+          description: A list of flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: No flights available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Flights Available
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      example: []
+
+  /flights/on/{date}:
+    get:
+      summary: Retrieve flights based on date
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+          description: Departure date in YYYY-MM-DD format
+      responses:
+        '200':
+          description: A list of flights
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: No flights available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Flights Available
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      example: []
+
+  /flights/{kode_penerbangan}:
+    get:
+      summary: Retrieve details of a flight
+      parameters:
+        - name: kode_penerbangan
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the flight
+      responses:
+        '200':
+          description: Details of the requested flight
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Data retrieved successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        kode_penerbangan:
+                          type: string
+                          example: FL123
+                        kode_pesawat:
+                          type: string
+                          example: B737
+                        kode_maskapai:
+                          type: string
+                          example: GA
+                        jumlah_tiket:
+                          type: integer
+                          example: 100
+                        dept_IATA:
+                          type: string
+                          example: CGK
+                        dest_IATA:
+                          type: string
+                          example: DPS
+                        dept_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T10:00:00Z
+                        arriv_time:
+                          type: string
+                          format: date-time
+                          example: 2023-06-04T12:00:00Z
+                        harga:
+                          type: number
+                          format: float
+                          example: 150.50
+                        departure_airport:
+                          type: string
+                          example: Soekarno-Hatta International Airport
+                        departure_city:
+                          type: string
+                          example: Jakarta
+                        departure_country:
+                          type: string
+                          example: Indonesia
+                        arrival_airport:
+                          type: string
+                          example: Ngurah Rai International Airport
+                        arrival_city:
+                          type: string
+                          example: Denpasar
+                        arrival_country:
+                          type: string
+                          example: Indonesia
+                        nama_maskapai:
+                          type: string
+                          example: Garuda Indonesia
+                        max_luggage:
+                          type: integer
+                          example: 30
+        '404':
+          description: Flight not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: Flight not found
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+
+  /bookings/{total_harga}/{kode_penerbangan}/{jumlah_tiket}/{nik}/{email}:
+    post:
+      summary: Book a flight ticket
+      parameters:
+        - name: total_harga
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Total price of the booking
+        - name: kode_penerbangan
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier of the flight
+        - name: jumlah_tiket
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Number of tickets to book
+        - name: nik
+          in: path
+          required: true
+          schema:
+            type: string
+          description: National identification number
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+            format: email
+          description: Email address of the customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                total_harga:
+                  type: string
+                  example: "150.50"
+                kode_penerbangan:
+                  type: string
+                  example: FL123
+                jumlah_tiket:
+                  type: integer
+                  example: 1
+                nik:
+                  type: string
+                  example: 1234567890
+                email:
+                  type: string
+                  format: email
+                  example: example@example.com
+      responses:
+        '201':
+          description: Booking successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 201
+                  status:
+                    type: string
+                    example: add success
+                  message:
+                    type: string
+                    example: Flight booked successfully
+                  kode_pemesanan:
+                    type: string
+                    example: abc123
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+        '500':
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 500
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+  /updateBandara/{IATA}/{nama_bandara}/{nama_kota}/{nama_negara}:
+    put:
+      summary: Update airport information
+      parameters:
+        - name: IATA
+          in: path
+          required: true
+          schema:
+            type: string
+          description: International Air Transport Association (IATA) code of the airport
+        - name: nama_bandara
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the airport
+        - name: nama_kota
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the city where the airport is located
+        - name: nama_negara
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Name of the country where the airport is located
+      requestBody:
+        required: false
+        content:
+          {}
+      responses:
+        '201':
+          description: Airport information updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 201
+                  status:
+                    type: string
+                    example: update success
+                  message:
+                    type: string
+                    example: Bandara updated successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+                    
+  /deleteBandara/{IATA}:
+    delete:
+      summary: Delete airport information
+      parameters:
+        - name: IATA
+          in: path
+          required: true
+          schema:
+            type: string
+          description: International Air Transport Association (IATA) code of the airport to delete
+      responses:
+        '200':
+          description: Airport information deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Bandara deleted successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z

@@ -1,0 +1,329 @@
+openapi: 3.0.0
+info:
+  title: Article Management API
+  version: 1.0.0
+  description: API for managing articles
+servers:
+  - url: http://localhost:5500
+paths:
+  /article:
+    post:
+      summary: Add a new article
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: My First Article
+                content:
+                  type: string
+                  example: This is the content of my first article.
+                author:
+                  type: string
+                  example: John Doe
+      responses:
+        '201':
+          description: Article created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: My First Article
+                  content:
+                    type: string
+                    example: This is the content of my first article.
+                  author:
+                    type: string
+                    example: John Doe
+                  date_created:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+        '500':
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 500
+                  status:
+                    type: string
+                    example: error
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+    get:
+      summary: Get all articles
+      responses:
+        '200':
+          description: A list of articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    title:
+                      type: string
+                      example: My First Article
+                    content:
+                      type: string
+                      example: This is the content of my first article.
+                    author:
+                      type: string
+                      example: John Doe
+                    date_created:
+                      type: string
+                      format: date-time
+                      example: 2023-06-04T12:00:00Z
+        '404':
+          description: No articles found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Articles Available
+
+  /article/{id}:
+    get:
+      summary: Get an article by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique identifier of the article
+      responses:
+        '200':
+          description: Details of the requested article
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: My First Article
+                  content:
+                    type: string
+                    example: This is the content of my first article.
+                  author:
+                    type: string
+                    example: John Doe
+                  date_created:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+        '404':
+          description: Article not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: Article not found
+
+    put:
+      summary: Update an article by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique identifier of the article
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Updated Article Title
+                content:
+                  type: string
+                  example: This is the updated content of the article.
+                author:
+                  type: string
+                  example: Jane Doe
+      responses:
+        '200':
+          description: Article updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 1
+                  title:
+                    type: string
+                    example: Updated Article Title
+                  content:
+                    type: string
+                    example: This is the updated content of the article.
+                  author:
+                    type: string
+                    example: Jane Doe
+                  date_created:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+        '404':
+          description: Article not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: Article not found
+
+    delete:
+      summary: Delete an article by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Unique identifier of the article
+      responses:
+        '200':
+          description: Article deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 200
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Article deleted successfully
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: 2023-06-04T12:00:00Z
+        '404':
+          description: Article not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: Article not found
+
+  /filterart:
+    get:
+      summary: Retrieve articles based on city name in title or content
+      parameters:
+        - name: location
+          in: query
+          required: false
+          schema:
+            type: string
+          description: City name to filter articles by
+      responses:
+        '200':
+          description: A list of filtered articles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                    title:
+                      type: string
+                      example: My First Article
+                    content:
+                      type: string
+                      example: This is the content of my first article.
+                    author:
+                      type: string
+                      example: John Doe
+                    date_created:
+                      type: string
+                      format: date-time
+                      example: 2023-06-04T12:00:00Z
+        '404':
+          description: No articles found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status_code:
+                    type: integer
+                    example: 404
+                  status:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: No Articles Available
