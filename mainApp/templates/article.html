@@ -111,13 +111,13 @@
           </h1>
           <div class="flex justify-center align-items-center">
             <div class="shape">
-              <p>Local Time: <strong> API NYA TAK MATIIN WLE </strong></p>
+              <p>Local Time: <strong> {{ time.LocalTimeNow }} </strong></p>
             </div>
             <div class="shape">
-              <p>Time Zone: <strong> API NYA TAK MATIIN WLE </strong></p>
+              <p>Time Zone: <strong> {{ time.TimeZoneId }} </strong></p>
             </div>
             <div class="shape">
-              <p>Overall AQI: <strong> API NYA TAK MATIIN WLE </strong></p>
+              <p>Overall AQI: <strong> {{ air.overall_aqi }} </strong></p>
             </div>
           </div>
         </div>

@@ -78,16 +78,16 @@ def get_attraction():
     if city:
         attraction_info = filtered_attr(city)
         article_info = filtered_article(city)
-        # lat, lon = get_coordinates(city)
-        # local_time = get_local_time(lat, lon)[0]
-        # weather = get_weather(lat, lon)
+        lat, lon = get_coordinates(city)
+        local_time = get_local_time(lat, lon)[0]
+        weather = get_weather(lat, lon)
         attraction_ticket = filtered_ticket(city)
         combined_info = {
           "attraction": attraction_info,
           "articles": article_info
         }
-        return render_template('article.html', data_city=combined_info, data=flight, datetime=datetime, siti=city, ticket=attraction_ticket
-                               #    time=local_time, air=weather
+        return render_template('article.html', data_city=combined_info, data=flight, datetime=datetime, siti=city, ticket=attraction_ticket,
+                                  time=local_time, air=weather
                                )
     else:
         return jsonify({'error': 'Location parameter is required'}), 400
